@@ -62,6 +62,8 @@ Usar `go_router` para que cada perfil tenga una URL que se pueda compartir.
 | `/yo` | Mi perfil: igual que el perfil + pestañas Tamagotchi e Intercambios |
 
 Si no hay token o el token expiró, redirigir a `/login` y volver después a la ruta pedida.
+Sin ruta pedida (abrir la app o hacer login directo), se entra a `/yo`: el progreso
+personal es lo primero (decisión del 2026-11-21).
 
 ## Endpoints que usa el tracker
 
@@ -72,7 +74,7 @@ El `userId` es un string (GUID), no un número.
 
 | Endpoint | Devuelve | Uso |
 |---|---|---|
-| `POST /api/Auth/login` body `{ userName, password }` | `{ token, expiration }` | Token válido 24 h. Guardarlo en memoria; ante un 401 o al pasar `expiration`, volver a `/login`. |
+| `POST /api/Auth/login` body `{ userName, password }` | `{ token, expiration }` | Token válido 24 h. Guardarlo en `sessionStorage` (sobrevive a F5, se borra al cerrar la pestaña; nunca `localStorage`); ante un 401 o al pasar `expiration`, volver a `/login`. Credenciales incorrectas → 401 `{ message }`. |
 | `GET /api/tracker/usuarios` | Página `{ total, pagina, tamano, items[] }`; cada item `{ posicion, id, userName, victorias, derrotas, winRate, totalPokemon, especiesRegistradas }` | Ranking. Query opcionales: `orden` (`winrate`, `victorias`, `pokedex`, `pokemon`, `nombre`; por defecto `nombre`), `pagina`, `tamano` (1–100), `search`, `minBatallas` (por defecto 5). **Incluye** al usuario actual. Un `orden` inválido da 400. |
 | `GET /api/Users?search=` | `[{ id, userName }]` | Alternativa de búsqueda: mínimo 2 caracteres, máximo 50 resultados, **excluye** al usuario actual. Preferir `tracker/usuarios?search=`. |
 
@@ -117,6 +119,41 @@ usar `GET /api/Inventario/usuario/{miId}`.
 - El CRUD antiguo `/api/Intercambios`.
 - Cualquier ruta de escritura o de GameAdmin.
 
+### Verificado contra el servidor real (2026-11-21, cuenta de prueba `ash`)
+
+Esto manda sobre las tablas de arriba cuando no coinciden.
+
+- **Login:** el JWT trae el id en el claim largo `.../claims/nameidentifier` y el nombre en
+  `.../claims/name`. `expiration` viene con `Z`.
+- **Ranking:** `minBatallas` debe ser ≥ 1, y `pagina` o `tamano` fuera de rango dan 400 con
+  texto plano. `minBatallas` **no saca jugadores de la lista**: con el valor por defecto
+  aparecen todos (7 jugadores, todos con 0 victorias y 0 derrotas y `winRate: null`).
+- **`GET /api/Batallas/usuario/{id}/resumen` responde 500 con cuerpo vacío para todos los
+  jugadores**, incluso para uno con batallas. Bug del backend: el encabezado de Batallas usa
+  `batallas` de `tracker/usuarios/{id}/resumen` (victorias, derrotas, huidas, winRate) y
+  trata `rachaActual`, `mejorPokemon` y `rivalMasEnfrentado` como opcionales.
+- **Resumen:** 404 en formato ProblemDetails (`title: "Not Found"`).
+- **Pokémon del jugador:** coincide con la guía y trae campos extra (`idUsuario`,
+  `pokemonEstado.idPokemonUser`, `pokemonEstado.idPokeball`). `fechaObtencion` llega
+  **sin `Z`**. `nombre` llega con mayúsculas inconsistentes (`marill`, `Pikachu`):
+  capitalizar al mostrar.
+- **Especies fuera de la Gen 1:** `ash` tiene un Marill (#183), y la Pokédex lo cuenta en
+  `registrados` aunque `total` sea 151. La cuadrícula muestra 1..`total`; las especies con id
+  mayor a `total` van aparte (por ejemplo, "Otras especies"), sin romper el conteo.
+- **Batallas:** `pokemon` es el Pokémon **del jugador**; el rival solo viene como
+  `idPokemonRival`. `fecha` llega sin `Z`.
+- **Mochila:** cada elemento es `{ id, idItem, idUser, cantidad, item: { id, nombre,
+  urlImagen, descripcion, tipoJuego, multiplicadorCaptura, … } }`, con los datos del objeto
+  anidados en `item`. `nombre` viene en inglés con guiones (`poke-ball`): mostrarlo como
+  "Poke Ball". La descripción está en inglés.
+- **`GET /api/me/pokemon`** tiene **otra forma** que `PokemonUsers`: es plano (`vidaActual`,
+  `vidaTotal`), `estado` es **texto** (`"Sano"`), no número, y no trae `pokemonEstado` ni
+  sprites. Usarlo solo para `available`/`reserved`, cruzando por `id`.
+- **`GET /api/tamagotchi` devuelve un arreglo** (vacío para `ash`), no un objeto. Su forma
+  interna sigue sin verificarse.
+- **`GET /api/me/trades`:** `[]` para `ash`; su forma interna sigue sin verificarse.
+- **Mensajes de error:** los 400 llegan en texto plano en español; los 404, en ProblemDetails.
+
 ## Reglas de presentación
 
 - **Sprites por id:** `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{idPokemon}.png`.
@@ -139,10 +176,14 @@ usar `GET /api/Inventario/usuario/{miId}`.
   validación y otros vienen vacíos. Leer el cuerpo como texto y parsear solo si se puede.
 - Modelos tolerantes: campos nuevos o faltantes no deben tronar la app
   (`fromJson` con valores por defecto y nullables).
-- Las formas de respuesta de las rutas con token **no se han verificado contra el servidor
-  real**; si algo no coincide con esta guía, ajustar el modelo y anotar la diferencia aquí.
+- Las formas de respuesta ya se verificaron contra el servidor real (ver "Verificado contra
+  el servidor real"), salvo Tamagotchi e Intercambios. Si algo más no coincide, ajustar el
+  modelo y anotar la diferencia en esa sección.
 
 ## Pendientes del equipo de backend
 
 - Configurar CORS con `AllowAnyOrigin()` (ver arriba).
-- Confirmar que `GET /api/Inventario/usuario/{userId}` no acredita pokébolas.
+- Confirmar que `GET /api/Inventario/usuario/{userId}` no acredita pokébolas. Prueba del
+  2026-11-21: con una llamada, el total de objetos de `ash` siguió en 14 (sin cambio).
+- Corregir el 500 de `GET /api/Batallas/usuario/{userId}/resumen` (falla con todos los
+  jugadores).

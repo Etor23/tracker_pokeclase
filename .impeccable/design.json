@@ -1,0 +1,763 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-21T18:37:14.778Z",
+  "title": "Design System: Tracker Pokémon",
+  "extensions": {
+    "colorMeta": {
+      "rojo-pokebola": {
+        "role": "primary",
+        "displayName": "Rojo pokébola",
+        "canonical": "#D7001A",
+        "oklch": "oklch(55.3% 0.225 26.6)",
+        "tonalRamp": [
+          "#2C0000",
+          "#630000",
+          "#980000",
+          "#C70004",
+          "#ED413D",
+          "#FF7E73",
+          "#FFB5AB",
+          "#FFE4DF"
+        ]
+      },
+      "tinta": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "canonical": "#0A0A0A",
+        "oklch": "oklch(14.5% 0.000 89.9)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#262626",
+          "#454545",
+          "#666666",
+          "#898989",
+          "#AEAEAE",
+          "#D1D1D1",
+          "#EEEEEE"
+        ]
+      },
+      "papel-hueso": {
+        "role": "neutral",
+        "displayName": "Papel hueso",
+        "canonical": "#F2F0EB",
+        "oklch": "oklch(95.5% 0.007 88.6)",
+        "tonalRamp": [
+          "#0C0B09",
+          "#272623",
+          "#464541",
+          "#686662",
+          "#8B8985",
+          "#AFAEAA",
+          "#D2D1CE",
+          "#EFEEED"
+        ]
+      },
+      "tinta-suave": {
+        "role": "neutral",
+        "displayName": "Tinta suave",
+        "canonical": "#4A4843",
+        "oklch": "oklch(40.2% 0.009 88.7)",
+        "tonalRamp": [
+          "#0C0B09",
+          "#282623",
+          "#474540",
+          "#686661",
+          "#8B8984",
+          "#AFAEA9",
+          "#D2D1CE",
+          "#EFEEED"
+        ]
+      },
+      "tenue": {
+        "role": "neutral",
+        "displayName": "Tenue",
+        "canonical": "#6E6B64",
+        "oklch": "oklch(52.8% 0.011 87.5)",
+        "tonalRamp": [
+          "#0C0B08",
+          "#282622",
+          "#47453F",
+          "#69665F",
+          "#8C8982",
+          "#B0AEA8",
+          "#D2D1CD",
+          "#EFEEED"
+        ]
+      },
+      "linea": {
+        "role": "neutral",
+        "displayName": "Línea",
+        "canonical": "#CFCBC2",
+        "oklch": "oklch(84.3% 0.013 86.8)",
+        "tonalRamp": [
+          "#0C0B08",
+          "#292621",
+          "#48453E",
+          "#69665E",
+          "#8C8981",
+          "#B1AEA7",
+          "#D3D1CC",
+          "#EFEEED"
+        ]
+      },
+      "hueco": {
+        "role": "neutral",
+        "displayName": "Hueco",
+        "canonical": "#E6E3DC",
+        "oklch": "oklch(91.6% 0.010 87.5)",
+        "tonalRamp": [
+          "#0C0B09",
+          "#282622",
+          "#47453F",
+          "#686660",
+          "#8B8983",
+          "#B0AEA9",
+          "#D2D1CD",
+          "#EFEEED"
+        ]
+      },
+      "blanco": {
+        "role": "neutral",
+        "displayName": "Blanco",
+        "canonical": "#FFFFFF",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#262626",
+          "#454545",
+          "#666666",
+          "#898989",
+          "#AEAEAE",
+          "#D1D1D1",
+          "#EEEEEE"
+        ]
+      },
+      "salud-sano": {
+        "role": "cuarentena-salud",
+        "displayName": "Salud: sano",
+        "canonical": "#2E7D4F",
+        "oklch": "oklch(52.9% 0.106 154.6)",
+        "tonalRamp": [
+          "#001102",
+          "#003112",
+          "#00542B",
+          "#28774A",
+          "#549B6E",
+          "#85BD98",
+          "#B8DBC2",
+          "#E5F3E9"
+        ]
+      },
+      "salud-afectado": {
+        "role": "cuarentena-salud",
+        "displayName": "Salud: afectado",
+        "canonical": "#A86500",
+        "oklch": "oklch(56.8% 0.127 66.0)",
+        "tonalRamp": [
+          "#1C0300",
+          "#451700",
+          "#6E3300",
+          "#955400",
+          "#B97930",
+          "#D7A26C",
+          "#EDCAA7",
+          "#FAECDE"
+        ]
+      },
+      "salud-debilitado": {
+        "role": "cuarentena-salud",
+        "displayName": "Salud: debilitado",
+        "canonical": "#8A1C1C",
+        "oklch": "oklch(41.6% 0.146 26.3)",
+        "tonalRamp": [
+          "#220000",
+          "#510003",
+          "#7F1718",
+          "#AA3C36",
+          "#CE655C",
+          "#EB9289",
+          "#FCC0B9",
+          "#FFE8E5"
+        ]
+      },
+      "tipo-normal": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Normal",
+        "canonical": "#787561",
+        "oklch": "oklch(55.9% 0.030 100.2)",
+        "tonalRamp": [
+          "#0D0B05",
+          "#292719",
+          "#484634",
+          "#6A6753",
+          "#8D8A77",
+          "#B1AF9F",
+          "#D3D1C7",
+          "#EFEFEA"
+        ]
+      },
+      "tipo-fuego": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Fuego",
+        "canonical": "#C84D1C",
+        "oklch": "oklch(57.9% 0.167 39.6)",
+        "tonalRamp": [
+          "#250000",
+          "#550000",
+          "#850C00",
+          "#B03600",
+          "#D56238",
+          "#F19170",
+          "#FFC0AA",
+          "#FFE8DF"
+        ]
+      },
+      "tipo-agua": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Agua",
+        "canonical": "#2F6FD0",
+        "oklch": "oklch(55.3% 0.164 258.8)",
+        "tonalRamp": [
+          "#00062D",
+          "#001F63",
+          "#003E96",
+          "#2162C1",
+          "#4C88E4",
+          "#7EAFFB",
+          "#B2D3FF",
+          "#E2F0FF"
+        ]
+      },
+      "tipo-planta": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Planta",
+        "canonical": "#39842F",
+        "oklch": "oklch(54.7% 0.142 141.4)",
+        "tonalRamp": [
+          "#001100",
+          "#003200",
+          "#045500",
+          "#2D7923",
+          "#589D4E",
+          "#87BF7F",
+          "#B9DDB3",
+          "#E5F3E3"
+        ]
+      },
+      "tipo-electrico": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Eléctrico",
+        "canonical": "#936E00",
+        "oklch": "oklch(56.0% 0.115 85.2)",
+        "tonalRamp": [
+          "#160800",
+          "#3A2000",
+          "#5F3E00",
+          "#845F00",
+          "#A78432",
+          "#C7AA6D",
+          "#E2CFA8",
+          "#F5EEDE"
+        ]
+      },
+      "tipo-hielo": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Hielo",
+        "canonical": "#29808B",
+        "oklch": "oklch(55.4% 0.082 207.2)",
+        "tonalRamp": [
+          "#000F14",
+          "#002E36",
+          "#00505A",
+          "#16737E",
+          "#4B96A1",
+          "#7FB9C2",
+          "#B4D9DE",
+          "#E3F2F4"
+        ]
+      },
+      "tipo-lucha": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Lucha",
+        "canonical": "#B23128",
+        "oklch": "oklch(51.0% 0.167 28.5)",
+        "tonalRamp": [
+          "#250000",
+          "#560000",
+          "#860104",
+          "#B23128",
+          "#D75D50",
+          "#F38E80",
+          "#FFBEB3",
+          "#FFE7E3"
+        ]
+      },
+      "tipo-veneno": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Veneno",
+        "canonical": "#8E3F99",
+        "oklch": "oklch(50.8% 0.158 322.6)",
+        "tonalRamp": [
+          "#19001E",
+          "#400249",
+          "#681D73",
+          "#8F409A",
+          "#B267BD",
+          "#D294DA",
+          "#EAC1EF",
+          "#F9E8FB"
+        ]
+      },
+      "tipo-tierra": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Tierra",
+        "canonical": "#90702A",
+        "oklch": "oklch(56.3% 0.096 83.8)",
+        "tonalRamp": [
+          "#150800",
+          "#382200",
+          "#5C3F00",
+          "#806117",
+          "#A38446",
+          "#C4AB79",
+          "#DFCFAF",
+          "#F4EEE1"
+        ]
+      },
+      "tipo-volador": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Volador",
+        "canonical": "#666DC1",
+        "oklch": "oklch(56.8% 0.129 277.9)",
+        "tonalRamp": [
+          "#070526",
+          "#1D1C56",
+          "#383A85",
+          "#565CAE",
+          "#7881D1",
+          "#9FA8EB",
+          "#C7CEFA",
+          "#EAEDFF"
+        ]
+      },
+      "tipo-psiquico": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Psíquico",
+        "canonical": "#CF3E6D",
+        "oklch": "oklch(58.6% 0.184 5.2)",
+        "tonalRamp": [
+          "#260006",
+          "#57001D",
+          "#880038",
+          "#B42157",
+          "#DA537B",
+          "#F686A2",
+          "#FFB9C9",
+          "#FFE5EB"
+        ]
+      },
+      "tipo-bicho": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Bicho",
+        "canonical": "#667E10",
+        "oklch": "oklch(55.4% 0.129 122.3)",
+        "tonalRamp": [
+          "#070E00",
+          "#1E2D00",
+          "#3A4E00",
+          "#5A7100",
+          "#7D9439",
+          "#A3B872",
+          "#CAD8AB",
+          "#EBF1E0"
+        ]
+      },
+      "tipo-roca": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Roca",
+        "canonical": "#857437",
+        "oklch": "oklch(56.2% 0.083 94.0)",
+        "tonalRamp": [
+          "#110A00",
+          "#312500",
+          "#534401",
+          "#766527",
+          "#998951",
+          "#BBAE81",
+          "#D9D1B4",
+          "#F2EFE3"
+        ]
+      },
+      "tipo-fantasma": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Fantasma",
+        "canonical": "#5E4A8F",
+        "oklch": "oklch(46.2% 0.110 295.1)",
+        "tonalRamp": [
+          "#0E0520",
+          "#2B1B4B",
+          "#4A3776",
+          "#6B589E",
+          "#8E7CC1",
+          "#B1A4DD",
+          "#D3CBF1",
+          "#EFECFB"
+        ]
+      },
+      "tipo-dragon": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Dragón",
+        "canonical": "#5A3FD1",
+        "oklch": "oklch(49.1% 0.212 283.9)",
+        "tonalRamp": [
+          "#0C0035",
+          "#260072",
+          "#421DAA",
+          "#5F46D8",
+          "#7F71FA",
+          "#A39EFF",
+          "#C8C8FF",
+          "#EAECFF"
+        ]
+      },
+      "tipo-siniestro": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Siniestro",
+        "canonical": "#4F4238",
+        "oklch": "oklch(39.0% 0.024 59.6)",
+        "tonalRamp": [
+          "#0F0A06",
+          "#2E241D",
+          "#4F4239",
+          "#716358",
+          "#94867C",
+          "#B7ABA3",
+          "#D7CFCA",
+          "#F1EEEB"
+        ]
+      },
+      "tipo-acero": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Acero",
+        "canonical": "#647787",
+        "oklch": "oklch(56.0% 0.034 243.8)",
+        "tonalRamp": [
+          "#060C12",
+          "#1B2833",
+          "#364755",
+          "#566978",
+          "#7A8C9B",
+          "#A1B0BD",
+          "#C8D2DB",
+          "#EBEFF2"
+        ]
+      },
+      "tipo-hada": {
+        "role": "cuarentena-tipo",
+        "displayName": "Tipo: Hada",
+        "canonical": "#C2497F",
+        "oklch": "oklch(58.4% 0.163 355.7)",
+        "tonalRamp": [
+          "#22000C",
+          "#500029",
+          "#7E0648",
+          "#A9316A",
+          "#CE5C8D",
+          "#EB8CB1",
+          "#FCBCD3",
+          "#FFE6EF"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display (cifra de póster)",
+        "purpose": "La cifra de la Pokédex, una por pantalla. 192 / 144 / 96 px según el ancho de la columna; el total a la mitad en tenue."
+      },
+      "headline": {
+        "displayName": "Headline bitmap",
+        "purpose": "Nombre del jugador y valores de la fila de cifras; 48 px en escritorio, 32 px en celular."
+      },
+      "label": {
+        "displayName": "Etiqueta bitmap",
+        "purpose": "Franjas de título, etiquetas de dato, pie de cifra, número de especie y texto de botones; mayúsculas."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Nombre del Pokémon en la lámina."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto corrido y campos."
+      },
+      "body-soft": {
+        "displayName": "Body soft",
+        "purpose": "Notas, descripciones y detalles en pantallas anchas (tinta suave)."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Detalles en celular (menos de 900 px), fechas y tooltips (tinta suave)."
+      },
+      "data": {
+        "displayName": "Data",
+        "purpose": "Cifras de interfaz con dígitos tabulares: usuario en la barra y valores de las barras."
+      },
+      "chip": {
+        "displayName": "Chip",
+        "purpose": "Etiqueta de tipo, blanco sobre el color del tipo."
+      }
+    },
+    "shadows": [],
+    "elevation": "Plano: sin sombras ni elevación. Estados con velo plano de tinta al 8 % (#14000000) o al 12 % (#1F000000); splash de Material apagado.",
+    "borders": [
+      {
+        "name": "regla",
+        "value": "2px solid #0A0A0A",
+        "purpose": "Estructura: láminas, campos, botones, barra superior, pestañas, fila de cifras."
+      },
+      {
+        "name": "divisor",
+        "value": "1px solid #CFCBC2",
+        "purpose": "Divisiones internas finas entre celdas de cifras."
+      },
+      {
+        "name": "foco",
+        "value": "3px solid #D7001A",
+        "purpose": "Foco de teclado en todos los botones y en un campo con error."
+      },
+      {
+        "name": "indicador-activo",
+        "value": "4px solid #D7001A (inferior)",
+        "purpose": "Pestaña y enlace de navegación activos."
+      },
+      {
+        "name": "borde-pixel",
+        "value": "cuadros de 2 px cada 4 px en #4A4843",
+        "purpose": "Borde punteado de la nota vacía."
+      }
+    ],
+    "textures": [
+      {
+        "name": "trama",
+        "value": "cuadros de 2 px en retícula de 6 px, desfasados 3 px fila por fila, en #CFCBC2",
+        "purpose": "Fondo de la celda de sprite y de los bloques de carga."
+      },
+      {
+        "name": "damero",
+        "value": "cuadros de 2 px en damero, #4A4843 al 45 %",
+        "purpose": "Celda no registrada de la tira de la Pokédex."
+      }
+    ],
+    "motion": [
+      {
+        "name": "barrido-pokedex",
+        "value": "700ms linear",
+        "purpose": "Único movimiento del perfil: un cursor de tinta recorre la tira de la Pokédex una vez al aparecer. Con reducir movimiento la tira aparece completa."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "margen-ancho",
+        "value": "700px",
+        "purpose": "Margen lateral de 40 px desde aquí (16 px por debajo); nombre a 48 px."
+      },
+      {
+        "name": "escritorio",
+        "value": "900px",
+        "purpose": "Barra superior completa; por debajo, barra inferior de navegación. Detalles a 15 px desde aquí."
+      },
+      {
+        "name": "resumen-dos-columnas",
+        "value": "1000px (ancho de columna)",
+        "purpose": "Columna de equipo de 420 px a la derecha."
+      },
+      {
+        "name": "cifras-cuatro-columnas",
+        "value": "640px (ancho de columna)",
+        "purpose": "Fila de cifras en 4 columnas; por debajo, 2."
+      },
+      {
+        "name": "poster",
+        "value": "560px / 760px (ancho de columna)",
+        "purpose": "Cifra de la Pokédex a 96 / 144 / 192 px."
+      }
+    ],
+    "imagery": "Solo sprites de PokeAPI cargados en tiempo de ejecución, a escala entera y sin suavizar. Copias de prueba en test/fixtures/sprites con su procedencia en ORIGEN.txt. No hay rasters generados."
+  },
+  "components": [
+    {
+      "name": "Botón primario",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción principal (ENTRAR): rojo, recto, regla de tinta de 2 px, etiqueta bitmap.",
+      "html": "<button class=\"ds-btn-primario\">ENTRAR</button>",
+      "css": ".ds-btn-primario { background: #D7001A; color: #FFFFFF; font-family: Silkscreen, monospace; font-size: 16px; line-height: 1; text-transform: uppercase; min-height: 48px; padding: 0 24px; border: 2px solid #0A0A0A; border-radius: 0; cursor: pointer; } .ds-btn-primario:hover { box-shadow: inset 0 0 0 999px rgba(0,0,0,0.12); } .ds-btn-primario:focus-visible { outline: none; border: 3px solid #D7001A; } .ds-btn-primario:disabled { background: #CFCBC2; color: #6E6B64; cursor: default; }"
+    },
+    {
+      "name": "Botón de contorno",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Acción secundaria (REINTENTAR, VER LOS 5 POKÉMON).",
+      "html": "<button class=\"ds-btn-contorno\">REINTENTAR</button>",
+      "css": ".ds-btn-contorno { background: #F2F0EB; color: #0A0A0A; font-family: Silkscreen, monospace; font-size: 16px; line-height: 1; text-transform: uppercase; min-height: 40px; padding: 0 16px; border: 2px solid #0A0A0A; border-radius: 0; cursor: pointer; } .ds-btn-contorno:hover { background: #E1DFDA; } .ds-btn-contorno:focus-visible { outline: none; border: 3px solid #D7001A; }"
+    },
+    {
+      "name": "Campo de texto",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Campo blanco con regla de tinta de 2 px; foco en regla roja.",
+      "html": "<input class=\"ds-campo\" placeholder=\"Buscar jugador\">",
+      "css": ".ds-campo { background: #FFFFFF; color: #0A0A0A; font-family: Archivo, sans-serif; font-size: 16px; line-height: 1.45; padding: 14px 16px; border: 2px solid #0A0A0A; border-radius: 0; width: 280px; } .ds-campo::placeholder { color: #6E6B64; } .ds-campo:focus-visible { outline: none; border-color: #D7001A; }"
+    },
+    {
+      "name": "Pestañas",
+      "kind": "nav",
+      "refersTo": "nav-link-active",
+      "description": "Pestañas del perfil: subrayado rojo de 4 px sobre regla de tinta de 2 px.",
+      "html": "<nav class=\"ds-tabs\"><a class=\"ds-tab ds-tab-activa\" href=\"#\">Resumen</a><a class=\"ds-tab\" href=\"#\">Equipo</a><a class=\"ds-tab\" href=\"#\">Batallas</a></nav>",
+      "css": ".ds-tabs { display: flex; gap: 24px; border-bottom: 2px solid #0A0A0A; } .ds-tab { font-family: Archivo, sans-serif; font-size: 15px; font-weight: 600; color: #4A4843; text-decoration: none; padding: 14px 0 10px; border-bottom: 4px solid transparent; margin-bottom: -2px; } .ds-tab:hover { color: #0A0A0A; } .ds-tab:focus-visible { outline: 3px solid #D7001A; } .ds-tab-activa { color: #0A0A0A; font-weight: 700; border-bottom-color: #D7001A; }"
+    },
+    {
+      "name": "Franja de título",
+      "kind": "custom",
+      "refersTo": "franja-titulo",
+      "description": "Encabezado de sección: franja de tinta con etiqueta bitmap en papel y conteo opcional.",
+      "html": "<div class=\"ds-franja\"><span>EQUIPO</span><span>5</span></div>",
+      "css": ".ds-franja { display: flex; justify-content: space-between; align-items: center; height: 40px; padding: 0 16px; background: #0A0A0A; color: #F2F0EB; font-family: Silkscreen, monospace; font-size: 16px; line-height: 1; text-transform: uppercase; }"
+    },
+    {
+      "name": "Etiqueta de tipo",
+      "kind": "chip",
+      "refersTo": "chip-tipo",
+      "description": "Tipo del Pokémon, solo dentro de la lámina; texto blanco sobre el color del tipo.",
+      "html": "<span class=\"ds-chip-tipo\" style=\"background:#936E00\">Eléctrico</span> <span class=\"ds-chip-tipo\" style=\"background:#2F6FD0\">Agua</span>",
+      "css": ".ds-chip-tipo { display: inline-block; color: #FFFFFF; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 700; line-height: 1.35; padding: 3px 8px; border-radius: 0; }"
+    },
+    {
+      "name": "Lámina de Pokémon",
+      "kind": "card",
+      "refersTo": "lamina-pokemon",
+      "description": "La única tarjeta: regla de 2 px, sprite en celda con trama, chips, salud y barras a escala exacta.",
+      "html": "<a class=\"ds-lamina\" href=\"#\"><div class=\"ds-lamina-cab\"><div class=\"ds-sprite\"></div><div><div class=\"ds-lamina-nombre\">Pikachu</div><div class=\"ds-lamina-num\">#025</div><span class=\"ds-lamina-chip\">Eléctrico</span><div class=\"ds-lamina-salud\"><i></i>Sano</div></div></div><div class=\"ds-barra\"><span>PS</span><b><i style=\"width:100%;background:#2E7D4F\"></i></b><em>35 / 35</em></div><div class=\"ds-barra\"><span>Ataque</span><b><i style=\"width:21.6%\"></i></b><em>55</em></div></a>",
+      "css": ".ds-lamina { display: block; width: 388px; padding: 16px; background: #F2F0EB; border: 2px solid #0A0A0A; color: #0A0A0A; text-decoration: none; font-family: Archivo, sans-serif; } .ds-lamina:hover { background: #E8E6E1; } .ds-lamina:focus-visible { outline: 3px solid #D7001A; } .ds-lamina-cab { display: flex; gap: 16px; margin-bottom: 16px; } .ds-sprite { width: 96px; height: 96px; background-color: #E6E3DC; background-image: radial-gradient(#CFCBC2 1px, transparent 1.2px); background-size: 6px 6px; } .ds-lamina-nombre { font-size: 20px; font-weight: 700; line-height: 1.2; } .ds-lamina-num { font-family: Silkscreen, monospace; font-size: 16px; color: #4A4843; margin: 4px 0 12px; } .ds-lamina-chip { background: #936E00; color: #FFFFFF; font-size: 13px; font-weight: 700; padding: 3px 8px; } .ds-lamina-salud { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 15px; } .ds-lamina-salud i { width: 8px; height: 8px; background: #2E7D4F; } .ds-barra { display: flex; align-items: center; padding: 3px 0; font-size: 15px; } .ds-barra span { width: 84px; color: #4A4843; } .ds-barra b { flex: 1; height: 8px; background: #E6E3DC; } .ds-barra b i { display: block; height: 8px; background: #0A0A0A; } .ds-barra em { width: 72px; text-align: right; font-style: normal; font-weight: 600; font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Nota vacía",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Explica un dato vacío o fallido: borde de pixeles sueltos y cuadro rojo marcador.",
+      "html": "<div class=\"ds-nota\"><i></i><p>Aún no hay batallas registradas. El win rate aparece con la primera victoria o derrota.</p></div>",
+      "css": ".ds-nota { display: flex; gap: 12px; padding: 16px; border: 2px dotted #4A4843; max-width: 420px; } .ds-nota i { flex: none; width: 8px; height: 8px; margin-top: 7px; background: #D7001A; } .ds-nota p { margin: 0; font-family: Archivo, sans-serif; font-size: 15px; line-height: 1.45; color: #4A4843; }"
+    },
+    {
+      "name": "Cifra de la Pokédex y tira",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "La cifra bitmap a escala de póster sobre su pie y la tira de celdas (rojo = registrada, damero = falta).",
+      "html": "<div class=\"ds-cifra\"><div class=\"ds-cifra-num\">023<small>/151</small></div><div class=\"ds-cifra-pie\">REGISTRADAS EN LA POKÉDEX</div><div class=\"ds-tira\"><i class=\"r\"></i><i></i><i></i><i class=\"r\"></i><i></i><i></i><i></i><i class=\"r\"></i><i></i><i></i><i></i><i></i><i class=\"r\"></i><i></i><i></i><i></i></div></div>",
+      "css": ".ds-cifra { font-family: Silkscreen, monospace; color: #0A0A0A; } .ds-cifra-num { font-size: 96px; line-height: 1; margin-left: -12px; font-variant-numeric: tabular-nums; } .ds-cifra-num small { font-size: 48px; color: #6E6B64; } .ds-cifra-pie { font-size: 16px; color: #4A4843; margin: 16px 0; } .ds-tira { display: flex; gap: 2px; } .ds-tira i { width: 8px; height: 8px; background: repeating-conic-gradient(rgba(74,72,67,0.45) 0 25%, transparent 0 50%) 0 0 / 4px 4px; } .ds-tira i.r { background: #D7001A; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "El especimen bitmap",
+    "overview": "Cada perfil se compone como la hoja de muestra de una fuente de pixeles: el dato más importante (cuántas especies lleva el jugador en la Pokédex) es una cifra bitmap a escala de póster, del mismo grano que los sprites de la Generación 1, y todo lo demás se ordena debajo en una retícula de celdas, reglas negras y etiquetas cortas en mayúsculas. Es papel, tinta y un solo rojo de pokébola; nada brilla, nada flota, nada está redondeado.\n\nLa densidad es de tabla impresa, no de dashboard: las cifras se leen a distancia (el tracker se proyecta en clase) y los textos de apoyo son pequeños y secundarios. Lo vacío no se esconde: se marca con una trama de puntos y se explica con una nota de borde punteado y cuadro rojo. El sistema rechaza explícitamente el dashboard de tarjetas redondeadas con dona y KPIs.\n\nLos colores de los tipos Pokémon y de la salud existen, pero en cuarentena: solo aparecen dentro de la lámina de cada Pokémon, que es la única pieza del mundo donde el dato del juego trae su propio color.",
+    "keyCharacteristics": [
+      "Silkscreen (bitmap) para cifras y etiquetas; Archivo para todo el texto de interfaz.",
+      "Papel hueso, tinta casi negra y un único acento rojo.",
+      "Esquinas rectas en todo; reglas de 2 px como estructura.",
+      "Sprites en pixeles nítidos, solo a escala entera.",
+      "Trama de puntos de 2 px como textura de lo vacío o lo pendiente.",
+      "Un solo momento de movimiento: el barrido de la tira de la Pokédex."
+    ],
+    "rules": [
+      {
+        "name": "The Un Solo Rojo Rule",
+        "body": "El rojo pokébola es el único acento del marco de la app. Marca lo registrado, lo activo, lo enfocado y lo que necesita atención; nunca decora.",
+        "section": "colors"
+      },
+      {
+        "name": "The Cuarentena Rule",
+        "body": "Los colores de tipo y de salud solo existen dentro de la lámina de un Pokémon. El marco (barra, franjas, cifras, tira, notas) nunca los toma.",
+        "section": "colors"
+      },
+      {
+        "name": "The Color Nunca Solo Rule",
+        "body": "Un color de tipo o de salud siempre va con su texto (\"Eléctrico\", \"Quemado\"); el color nunca es la única señal.",
+        "section": "colors"
+      },
+      {
+        "name": "The Múltiplo de Ocho Rule",
+        "body": "Silkscreen solo se usa en tamaños múltiplos de 8 px, para que cada pixel del glifo caiga entero. El código lo impone con una aserción en `Tipos.bitmap`.",
+        "section": "typography"
+      },
+      {
+        "name": "The Octavo de Em Rule",
+        "body": "Silkscreen deja 1/8 de em de margen a la izquierda de cada glifo. Una cifra bitmap que debe arrancar en el borde de la columna se desplaza −tamaño/8 en x (así está la cifra de la Pokédex).",
+        "section": "typography"
+      },
+      {
+        "name": "The Cifras Tabulares Rule",
+        "body": "Toda cifra (Silkscreen y el estilo Data) lleva `tabularFigures`, para que las columnas de números se alineen.",
+        "section": "typography"
+      },
+      {
+        "name": "The Bitmap Breve Rule",
+        "body": "Silkscreen solo para cifras grandes y etiquetas cortas en mayúsculas. Ninguna frase, descripción ni texto de ayuda va en bitmap.",
+        "section": "typography"
+      },
+      {
+        "name": "The Celda Completa Rule",
+        "body": "Los espacios salen de la escala de `Espacio` (4, 8, 16, 24, 32, 48) y las reglas miden 2 px. Un espacio nuevo se elige de la escala, no se inventa.",
+        "section": "layout"
+      },
+      {
+        "name": "The Papel Plano Rule",
+        "body": "Nada flota sobre el papel. La separación se dibuja con una regla, nunca con una sombra.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Esquina Recta Rule",
+        "body": "Ningún radio. Un rectángulo redondeado no pertenece a este mundo.",
+        "section": "shapes"
+      },
+      {
+        "name": "The Un Solo Movimiento Rule",
+        "body": "Al aparecer, un cursor de tinta recorre la tira una vez en 700 ms (lineal) y voltea cada celda al pasar; las pendientes se ven en trama de línea. Es el único movimiento del perfil. Con \"reducir movimiento\" activo la tira aparece completa, sin barrido.",
+        "section": "components"
+      },
+      {
+        "name": "The Escala Exacta Rule",
+        "body": "Una barra mide exactamente su fracción del máximo. Sin mínimos visibles, sin redondeos, sin degradados.",
+        "section": "components"
+      },
+      {
+        "name": "The Pixel Entero Rule",
+        "body": "Un sprite solo escala en múltiplos enteros de 96 px y nunca se suaviza; las cifras grandes comparten ese grano.",
+        "section": "components"
+      },
+      {
+        "name": "The Vacío Explicado Rule",
+        "body": "Un dato vacío nunca se esconde ni se muestra en cero falso: lleva una nota que dice qué falta y cómo se llena, y un win rate nulo se escribe \"—\".",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do usar Silkscreen solo en múltiplos de 8 px y compensar 1/8 de em a la izquierda cuando la cifra deba arrancar en el borde.",
+      "Do escalar sprites solo en enteros, con `FilterQuality.none`, sobre la celda en hueco con trama.",
+      "Do dibujar las barras a la fracción exacta del dato y escribir toda cifra con dígitos tabulares.",
+      "Do abrir cada sección con la franja de tinta y etiqueta bitmap, y estructurar con reglas de 2 px en tinta y divisores de 1 px en línea.",
+      "Do marcar lo vacío o lo pendiente con la trama de puntos y explicarlo con la nota de borde punteado y cuadro rojo.",
+      "Do tomar colores, medidas y estilos de `lib/core/theme/` (`Paleta`, `Espacio`, `Tipos`).",
+      "Do mostrar el foco de teclado como regla roja de 3 px."
+    ],
+    "donts": [
+      "Don't redondear esquinas ni usar sombras o elevación.",
+      "Don't usar los colores de tipo o de salud fuera de la lámina de un Pokémon.",
+      "Don't agregar un segundo color de acento ni usar el rojo como decoración.",
+      "Don't suavizar ni escalar un sprite a un factor fraccionario.",
+      "Don't escribir frases o texto de ayuda en Silkscreen, ni usarlo en tamaños que no sean múltiplos de 8.",
+      "Don't agregar movimiento más allá del barrido de la tira, ni un barrido que ignore \"reducir movimiento\".",
+      "Don't componer el perfil como dashboard de tarjetas redondeadas con dona y KPIs."
+    ]
+  }
+}
