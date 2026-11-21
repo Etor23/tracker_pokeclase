@@ -1,3 +1,4 @@
+import '../../core/formato.dart';
 import '../../core/theme/pokemon_colores.dart';
 import '../json.dart';
 
@@ -53,9 +54,7 @@ class PokemonJugador {
   bool get crianzaMuerta => crianza?.vivo == false;
 
   /// Sprite frontal; si el backend no lo manda, el de PokeAPI por especie.
-  String get sprite =>
-      estado.urlFrontal ??
-      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$idEspecie.png';
+  String get sprite => estado.urlFrontal ?? urlSpriteEspecie(idEspecie);
 }
 
 class EstadoPokemon {
@@ -69,6 +68,7 @@ class EstadoPokemon {
     required this.tipoPrimario,
     required this.tipoSecundario,
     required this.urlFrontal,
+    this.urlTrasera,
   });
 
   factory EstadoPokemon.fromJson(Json json) => EstadoPokemon(
@@ -81,6 +81,7 @@ class EstadoPokemon {
     tipoPrimario: json.stringOrNull('tipoPrimario'),
     tipoSecundario: json.stringOrNull('tipoSecundario'),
     urlFrontal: json.stringOrNull('urlFrontal'),
+    urlTrasera: json.stringOrNull('urlTrasera'),
   );
 
   final int vidaActual;
@@ -92,6 +93,7 @@ class EstadoPokemon {
   final String? tipoPrimario;
   final String? tipoSecundario;
   final String? urlFrontal;
+  final String? urlTrasera;
 
   List<String> get tipos => [?tipoPrimario, ?tipoSecundario];
 }
@@ -102,6 +104,8 @@ class Crianza {
     required this.energia,
     required this.higiene,
     required this.vivo,
+    this.fechaAdopcion,
+    this.fechaMuerte,
   });
 
   factory Crianza.fromJson(Json json) => Crianza(
@@ -109,10 +113,14 @@ class Crianza {
     energia: json.integer('energia'),
     higiene: json.integer('higiene'),
     vivo: json.boolean('vivo', true),
+    fechaAdopcion: json.utcDateOrNull('fechaAdopcion'),
+    fechaMuerte: json.utcDateOrNull('fechaMuerte'),
   );
 
   final int hambre;
   final int energia;
   final int higiene;
   final bool vivo;
+  final DateTime? fechaAdopcion;
+  final DateTime? fechaMuerte;
 }

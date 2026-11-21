@@ -110,17 +110,18 @@ class _Barra extends StatelessWidget {
               onTap: () => context.go(Rutas.yo),
             ),
             const Spacer(),
-            SizedBox(
-              width: 280,
-              child: TextField(
-                onSubmitted: (t) => _buscar(context, t),
-                textInputAction: .search,
-                decoration: const InputDecoration(
-                  hintText: 'Buscar jugador',
-                  prefixIcon: Icon(Icons.search, color: Paleta.tinta),
+            if (seccion != Seccion.ranking)
+              SizedBox(
+                width: 280,
+                child: TextField(
+                  onSubmitted: (t) => _buscar(context, t),
+                  textInputAction: .search,
+                  decoration: const InputDecoration(
+                    hintText: 'Buscar jugador',
+                    prefixIcon: Icon(Icons.search, color: Paleta.tinta),
+                  ),
                 ),
               ),
-            ),
             const SizedBox(width: Espacio.l),
             if (session != null)
               Text(
@@ -135,11 +136,12 @@ class _Barra extends StatelessWidget {
             ),
           ] else ...[
             const Spacer(),
-            IconButton(
-              tooltip: 'Buscar jugador',
-              icon: const Icon(Icons.search),
-              onPressed: () => context.go(Rutas.ranking),
-            ),
+            if (seccion != Seccion.ranking)
+              IconButton(
+                tooltip: 'Buscar jugador',
+                icon: const Icon(Icons.search),
+                onPressed: () => context.go(Rutas.ranking),
+              ),
             IconButton(
               tooltip: 'Cerrar sesión',
               icon: const Icon(Icons.logout),

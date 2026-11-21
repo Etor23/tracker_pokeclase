@@ -22,6 +22,17 @@ String fechaCorta(DateTime fecha) {
   return '${local.day} ${_meses[local.month - 1]} ${local.year}';
 }
 
+/// "14:05", en hora local.
+String horaCorta(DateTime fecha) {
+  final local = fecha.toLocal();
+  String dos(int n) => n.toString().padLeft(2, '0');
+  return '${dos(local.hour)}:${dos(local.minute)}';
+}
+
+/// Sprite frontal de una especie en el repositorio de PokeAPI (96 × 96).
+String urlSpriteEspecie(int id) =>
+    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png';
+
 /// Los nombres llegan con mayúsculas inconsistentes (`marill`, `Pikachu`).
 String capitalizar(String texto) =>
     texto.isEmpty ? texto : '${texto[0].toUpperCase()}${texto.substring(1)}';

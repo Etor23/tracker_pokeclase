@@ -5,6 +5,7 @@ import '../../core/api/api_exception.dart';
 import '../../core/carga.dart';
 import '../../core/formato.dart';
 import '../../core/theme/tokens.dart';
+import '../../core/widgets/fila_cifras.dart';
 import '../../core/widgets/franja_titulo.dart';
 import '../../core/widgets/nota_vacia.dart';
 import '../../core/widgets/pokedex_tira.dart';
@@ -228,83 +229,23 @@ class _FilaCifras extends StatelessWidget {
     ].join(' · ');
     final decididas = b.victorias + b.derrotas;
 
-    final celdas = [
-      _Celda('Pokémon', '${p.total}', salud.isEmpty ? 'Sin Pokémon' : salud),
-      _Celda(
+    return FilaCifras(compacta: compacta, [
+      Cifra('Pokémon', '${p.total}', salud.isEmpty ? 'Sin Pokémon' : salud),
+      Cifra(
         'Batallas',
         '${b.total}',
         '${b.victorias} V · ${b.derrotas} D · ${b.huidas} H',
       ),
-      _Celda(
+      Cifra(
         'Win rate',
         porcentaje(b.winRate, pegado: true),
         decididas == 0
             ? 'Sin victorias ni derrotas'
             : '${b.victorias} de $decididas decididas',
       ),
-      _Celda('Objetos', '${r.objetosTotal}', '${r.objetosDistintos} distintos'),
-    ];
-
-    final valor = compacta ? 32.0 : 48.0;
-    final columnas = compacta ? 2 : 4;
-    final filas = [
-      for (var i = 0; i < celdas.length; i += columnas)
-        celdas.sublist(i, i + columnas),
-    ];
-    // Table: todas las celdas de una fila miden lo mismo, así las reglas y
-    // divisores corren completos.
-    return Table(
-      border: TableBorder(
-        top: const BorderSide(color: Paleta.tinta, width: Espacio.regla),
-        verticalInside: const BorderSide(color: Paleta.linea),
-        horizontalInside: const BorderSide(color: Paleta.linea),
-      ),
-      defaultVerticalAlignment: TableCellVerticalAlignment.top,
-      children: [
-        for (final fila in filas)
-          TableRow(
-            children: [
-              for (final (i, c) in fila.indexed)
-                Padding(
-                  padding: EdgeInsets.fromLTRB(
-                    i == 0 ? 0 : Espacio.m,
-                    Espacio.m,
-                    Espacio.m,
-                    Espacio.m,
-                  ),
-                  child: c.build(valor, compacto: compacta),
-                ),
-            ],
-          ),
-      ],
-    );
+      Cifra('Objetos', '${r.objetosTotal}', '${r.objetosDistintos} distintos'),
+    ]);
   }
-}
-
-class _Celda {
-  const _Celda(this.etiqueta, this.valor, this.detalle);
-
-  final String etiqueta;
-  final String valor;
-  final String detalle;
-
-  Widget build(double tam, {required bool compacto}) => Semantics(
-    label: '$etiqueta: $valor. $detalle',
-    excludeSemantics: true,
-    child: Column(
-      crossAxisAlignment: .start,
-      children: [
-        Text(
-          etiqueta.toUpperCase(),
-          style: Tipos.bitmap(16, color: Paleta.tintaSuave),
-        ),
-        const SizedBox(height: Espacio.s + 4),
-        Text(valor, style: Tipos.bitmap(tam)),
-        const SizedBox(height: Espacio.s),
-        Text(detalle, style: Tipos.detalle(compacto: compacto)),
-      ],
-    ),
-  );
 }
 
 class _Equipo extends StatelessWidget {

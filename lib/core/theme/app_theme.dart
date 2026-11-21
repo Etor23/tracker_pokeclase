@@ -186,6 +186,17 @@ ThemeData buildAppTheme() {
         ),
       ),
     ),
+    chipTheme: ChipThemeData(
+      shape: const RoundedRectangleBorder(),
+      side: const BorderSide(color: Paleta.tinta, width: Espacio.regla),
+      color: WidgetStateProperty.resolveWith(
+        (s) => s.contains(WidgetState.selected) ? Paleta.rojo : Paleta.papel,
+      ),
+      labelStyle: Tipos.chipOrden,
+      secondaryLabelStyle: Tipos.chipOrden.copyWith(color: Paleta.blanco),
+      showCheckmark: false,
+      padding: const EdgeInsets.symmetric(horizontal: Espacio.xs, vertical: 6),
+    ),
     tooltipTheme: const TooltipThemeData(
       decoration: BoxDecoration(color: Paleta.tinta),
       textStyle: TextStyle(

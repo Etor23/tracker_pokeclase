@@ -10,7 +10,13 @@ import '../../core/widgets/nota_vacia.dart';
 import '../../core/widgets/tracker_shell.dart';
 import '../../data/tracker_repository.dart';
 import 'perfil_controller.dart';
+import 'batallas_tab.dart';
+import 'equipo_tab.dart';
+import 'intercambios_tab.dart';
+import 'mochila_tab.dart';
+import 'pokedex_tab.dart';
 import 'resumen_tab.dart';
+import 'tamagotchi_tab.dart';
 
 /// Perfil de un jugador (`/usuario/:id`) o el propio (`/yo`, con las pestañas
 /// extra de Tamagotchi e Intercambios).
@@ -34,8 +40,11 @@ class PerfilScreen extends StatelessWidget {
       seccion: esPropio ? Seccion.yo : Seccion.otro,
       child: ChangeNotifierProvider(
         key: ValueKey(id),
-        create: (context) =>
-            PerfilController(context.read<TrackerRepository>(), id)..cargar(),
+        create: (context) => PerfilController(
+          context.read<TrackerRepository>(),
+          id,
+          propio: propio,
+        )..cargar(),
         child: _Perfil(
           propio: propio,
           nombreProvisional: propio ? session?.userName : null,
@@ -104,16 +113,26 @@ class _Perfil extends StatelessWidget {
                   margen,
                   Espacio.xxl,
                 ),
-                sliver: SliverToBoxAdapter(
-                  child: ListenableBuilder(
-                    listenable: tabs,
-                    builder: (context, _) => switch (tabs.index) {
-                      0 => ResumenTab(alVerEquipo: () => tabs.animateTo(1)),
-                      _ => NotaVacia(
+                // Cada pestaña es un sliver: la Pokédex arma su retícula de
+                // forma diferida.
+                sliver: ListenableBuilder(
+                  listenable: tabs,
+                  builder: (context, _) => switch (tabs.index) {
+                    0 => SliverToBoxAdapter(
+                      child: ResumenTab(alVerEquipo: () => tabs.animateTo(1)),
+                    ),
+                    1 => const SliverToBoxAdapter(child: EquipoTab()),
+                    2 => const SliverToBoxAdapter(child: BatallasTab()),
+                    3 => const SliverToBoxAdapter(child: MochilaTab()),
+                    4 => const PokedexTab(),
+                    5 => const SliverToBoxAdapter(child: TamagotchiTab()),
+                    6 => const SliverToBoxAdapter(child: IntercambiosTab()),
+                    _ => SliverToBoxAdapter(
+                      child: NotaVacia(
                         'La pestaña ${pestanas[tabs.index]} está en construcción.',
                       ),
-                    },
-                  ),
+                    ),
+                  },
                 ),
               ),
             ],

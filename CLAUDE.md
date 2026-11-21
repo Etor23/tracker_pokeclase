@@ -16,8 +16,17 @@ y ejemplos de respuesta, está en `docs/endpoints.md`: consultarla por sección 
 - **Fase 0 (base) lista:** cliente HTTP, sesión, router con redirecciones y login funcional.
 - **Fase 1 (mundo visual) en cierre:** tokens, tema, marco de la app, login y perfil →
   pestaña Resumen con datos reales.
-- Pendientes (marcadores `EnConstruccion`/`NotaVacia`): ranking, detalle de Pokémon y las
-  pestañas Equipo, Batallas, Mochila, Pokédex, Tamagotchi e Intercambios.
+- **Fase 2 (pantallas) en curso**, en la rama `fase-2-pantallas`:
+  - Listos: el ranking, con búsqueda, orden y página en la URL (`/?orden=winrate&q=ash`), las
+    pestañas Equipo, Batallas, Mochila y Pokédex, y el detalle de un Pokémon (sale de la
+    colección del jugador; no hay endpoint por Pokémon).
+  - Cada pestaña es un sliver. Lo que no usa Resumen se pide al abrir su pestaña con los
+    métodos `asegurar…` de `PerfilController`, que se pueden llamar desde `build`.
+  - El catálogo de especies (`/api/generation/1`) queda en caché en `TrackerRepository`.
+- **Tamagotchi e Intercambios** (solo en `/yo`) están construidos con los campos de
+  `docs/endpoints.md`, pero **sin verificar** contra el servidor: `ash` no tiene mascotas ni
+  intercambios. Los modelos (`mascota.dart`, `intercambio.dart`) son tolerantes y lo dicen en
+  su comentario. Cuando haya datos reales, comparar y ajustar.
 - Solo existe la plataforma **web** (`web/`).
 - Repo: `origin` = GitHub `Etor23/tracker_pokeclase`, rama principal `master`.
 

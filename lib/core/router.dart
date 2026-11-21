@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 
+import '../data/models/ranking.dart';
 import '../features/login/login_screen.dart';
 import '../features/perfil/perfil_screen.dart';
 import '../features/pokemon/pokemon_detalle_screen.dart';
@@ -36,7 +37,10 @@ GoRouter createRouter(SessionController session) => GoRouter(
     ),
     GoRoute(
       path: Rutas.ranking,
-      builder: (context, state) => const RankingScreen(),
+      builder: (context, state) => RankingScreen(
+        orden: OrdenRanking.desde(state.uri.queryParameters['orden']),
+        busqueda: state.uri.queryParameters['q']?.trim() ?? '',
+      ),
     ),
     GoRoute(
       path: '/usuario/:id',
