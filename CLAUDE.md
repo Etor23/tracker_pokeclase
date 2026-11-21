@@ -14,8 +14,10 @@ y ejemplos de respuesta, está en `docs/endpoints.md`: consultarla por sección 
 ## Estado actual (actualizar al avanzar)
 
 - **Fase 0 (base) lista:** cliente HTTP, sesión, router con redirecciones y login funcional.
-- Ranking, perfil, detalle de Pokémon y `/yo` son marcadores (`EnConstruccion`).
-- Siguiente: Fase 1 (dirección visual → tokens de tema), luego las pantallas.
+- **Fase 1 (mundo visual) en cierre:** tokens, tema, marco de la app, login y perfil →
+  pestaña Resumen con datos reales.
+- Pendientes (marcadores `EnConstruccion`/`NotaVacia`): ranking, detalle de Pokémon y las
+  pestañas Equipo, Batallas, Mochila, Pokédex, Tamagotchi e Intercambios.
 - Solo existe la plataforma **web** (`web/`).
 - Repo: `origin` = GitHub `Etor23/tracker_pokeclase`, rama principal `master`.
 
@@ -33,7 +35,16 @@ flutter test                                      # todas las pruebas
 flutter test test/core/api_client_test.dart       # un archivo
 flutter test --plain-name "texto plano"           # una prueba por nombre
 flutter build web
+
+# Capturas de regresión visual (test/capturas/goldens). Solo corren con CAPTURAS
+# porque el renderizado de fuentes cambia entre sistemas operativos.
+CAPTURAS=1 flutter test test/capturas --update-goldens   # generar
+CAPTURAS=1 flutter test test/capturas                    # comparar
 ```
+
+Las capturas usan las respuestas reales guardadas en `test/fixtures/` (cuenta de prueba
+`ash`), un perfil sintético "demo" y los sprites de `test/fixtures/sprites/`. Son la forma de
+ver el resultado sin navegador, porque la app necesita sesión y CORS.
 
 ## Arquitectura
 
@@ -77,14 +88,32 @@ features/  → una carpeta por pantalla
 
 Para trabajo de UI usar el skill `impeccable` (`.claude/skills/impeccable/`, con sus agentes
 revisores en `.claude/agents/`) y `better-ui` para el pulido de superficies e íconos.
+`PRODUCT.md` guarda el contexto del producto, y el contrato de dirección del mundo visual
+está en `.impeccable/surfaces/`.
+
+**Mundo visual: "especimen bitmap".** Papel, tinta y un solo rojo de pokébola; reglas negras
+de 2 px y esquinas rectas; franjas negras (`FranjaTitulo`) como encabezados; borde de
+pixeles y cuadro rojo (`NotaVacia`) para vacíos y errores.
+
+- **Tokens en `core/theme/tokens.dart`:** `Paleta`, `Espacio` (módulo de 8 px) y `Tipos`.
+  Los widgets no usan colores ni medidas sueltos.
+- **Silkscreen** (bitmap) solo para cifras grandes y etiquetas cortas en mayúsculas, y siempre
+  con `Tipos.bitmap(n)` donde `n` es múltiplo de 8 (si no, el pixel no cae entero; hay un
+  `assert`). Deja 1/8 de em de margen izquierdo: compensarlo en cifras grandes. **Archivo**
+  para todo el texto de interfaz. Ambas fuentes van como assets (`assets/fonts/`).
+- **Colores en cuarentena:** los de tipo y salud (`pokemon_colores.dart`) solo dentro de la
+  lámina de un Pokémon, nunca en el marco. Todos tienen al menos 4.5:1 con texto blanco.
+- **Sprites con `PixelSprite`:** escala entera (96 px × n) y `FilterQuality.none`, nunca
+  suavizados.
+- Las barras van a escala exacta del dato y los números usan cifras tabulares.
+- Un solo momento de movimiento por pantalla, que respete `MediaQuery.disableAnimationsOf`.
+
+Reglas generales:
 
 - Definir una dirección visual concreta antes de implementar.
 - Evitar la estética genérica de IA: degradados morados, tarjetas con brillo, esquinas
   demasiado redondeadas, *hero* genérico y cuadrículas de tarjetas repetidas.
 - Dar carácter con tipografía, espacio en blanco, composición y jerarquía.
-- Paleta sobria y con propósito. Colores, tipografía y espaciado viven como tokens en un solo
-  lugar (`core/theme/`: `ThemeData` + un `ThemeExtension` propio); los widgets no usan
-  colores ni medidas sueltos.
 - Interacciones cuidadas en vez de animaciones innecesarias.
 - Usar las referencias de diseño que se den, sin copiarlas a ciegas.
 - Revisar el resultado renderizado en escritorio y móvil: `flutter run -d chrome` y cambiar el

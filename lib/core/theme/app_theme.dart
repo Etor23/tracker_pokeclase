@@ -16,7 +16,7 @@ ThemeData buildAppTheme() {
         surface: Paleta.papel,
       ).copyWith(
         primary: Paleta.rojo,
-        onPrimary: Colors.white,
+        onPrimary: Paleta.blanco,
         secondary: Paleta.tinta,
         onSecondary: Paleta.papel,
         surface: Paleta.papel,
@@ -25,7 +25,7 @@ ThemeData buildAppTheme() {
         outline: Paleta.tinta,
         outlineVariant: Paleta.linea,
         error: Paleta.rojo,
-        onError: Colors.white,
+        onError: Paleta.blanco,
       );
 
   // Foco de teclado visible: regla roja de 3 px.
@@ -71,7 +71,8 @@ ThemeData buildAppTheme() {
           (s) => s.contains(WidgetState.disabled) ? Paleta.linea : Paleta.rojo,
         ),
         foregroundColor: WidgetStateProperty.resolveWith(
-          (s) => s.contains(WidgetState.disabled) ? Paleta.tenue : Colors.white,
+          (s) =>
+              s.contains(WidgetState.disabled) ? Paleta.tenue : Paleta.blanco,
         ),
         overlayColor: const WidgetStatePropertyAll(Color(0x1F000000)),
         side: lado(regla),
@@ -114,7 +115,7 @@ ThemeData buildAppTheme() {
     ),
     inputDecorationTheme: const InputDecorationTheme(
       filled: true,
-      fillColor: Colors.white,
+      fillColor: Paleta.blanco,
       isDense: true,
       contentPadding: EdgeInsets.symmetric(horizontal: Espacio.m, vertical: 14),
       labelStyle: TextStyle(color: Paleta.tintaSuave),
@@ -171,7 +172,9 @@ ThemeData buildAppTheme() {
       height: 64,
       iconTheme: WidgetStateProperty.resolveWith(
         (s) => IconThemeData(
-          color: s.contains(WidgetState.selected) ? Colors.white : Paleta.tinta,
+          color: s.contains(WidgetState.selected)
+              ? Paleta.blanco
+              : Paleta.tinta,
         ),
       ),
       labelTextStyle: const WidgetStatePropertyAll(

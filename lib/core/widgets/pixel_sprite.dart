@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../formato.dart';
 import '../theme/tokens.dart';
+import 'trama.dart';
 
 /// Sprite de PokeAPI (96 × 96) escalado solo en múltiplos enteros y sin
 /// suavizar: el movimiento característico del mundo bitmap.
@@ -70,11 +71,12 @@ class PixelSprite extends StatelessWidget {
         child: imagen,
       );
     }
+    // Fondo con la trama del mundo: el hueco donde va el sprite.
     return Container(
       width: tam,
       height: tam,
       color: Paleta.hueco,
-      child: imagen,
+      child: CustomPaint(painter: const TramaPainter(), child: imagen),
     );
   }
 }

@@ -19,8 +19,11 @@ abstract final class Paleta {
   /// Reglas finas y celdas vacías.
   static const linea = Color(0xFFCFCBC2);
 
-  /// Fondo de las celdas de sprite.
+  /// Fondo de las celdas de sprite y de las barras.
   static const hueco = Color(0xFFE6E3DC);
+
+  /// Texto sobre rojo o sobre un color de tipo/salud, y fondo de los campos.
+  static const blanco = Color(0xFFFFFFFF);
 }
 
 /// Espaciado en un módulo de 8 px; todo se acomoda en celdas completas.
@@ -73,6 +76,20 @@ abstract final class Tipos {
     height: 1.45,
     color: Paleta.tintaSuave,
   );
+
+  /// Etiqueta de tipo dentro de la lámina (texto blanco sobre el color).
+  static const chip = TextStyle(
+    fontFamily: 'Archivo',
+    fontSize: 13,
+    height: 1.35,
+    fontWeight: FontWeight.w700,
+    color: Paleta.blanco,
+  );
+
+  /// Detalle que acompaña a una cifra: 15 px en pantallas anchas (se lee en
+  /// proyector) y 13 px en celular.
+  static TextStyle detalle({required bool compacto}) =>
+      compacto ? pequeno : cuerpoSuave;
 
   static const pequeno = TextStyle(
     fontFamily: 'Archivo',

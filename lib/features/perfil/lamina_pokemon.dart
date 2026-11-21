@@ -34,7 +34,7 @@ class LaminaPokemon extends StatelessWidget {
         onTap: () => context.go(Rutas.pokemon(userId, p.id)),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Paleta.papel,
             border: Border.all(color: Paleta.tinta, width: Espacio.regla),
           ),
           padding: const EdgeInsets.all(Espacio.m),
@@ -98,7 +98,10 @@ class LaminaPokemon extends StatelessWidget {
                   _BarraDato('Velocidad', valor: e.velocidadBase, maximo: 255),
                   if (origen.isNotEmpty) ...[
                     const SizedBox(height: Espacio.s),
-                    Text(origen, style: Tipos.pequeno),
+                    Text(
+                      origen,
+                      style: Tipos.detalle(compacto: _compacto(context)),
+                    ),
                   ],
                 ],
               );
@@ -119,15 +122,7 @@ class _ChipTipo extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     color: TiposPokemon.color(tipo),
     padding: const EdgeInsets.symmetric(horizontal: Espacio.s, vertical: 3),
-    child: Text(
-      TiposPokemon.nombre(tipo),
-      style: const TextStyle(
-        fontFamily: 'Archivo',
-        fontSize: 13,
-        fontWeight: FontWeight.w700,
-        color: Colors.white,
-      ),
-    ),
+    child: Text(TiposPokemon.nombre(tipo), style: Tipos.chip),
   );
 }
 
@@ -148,7 +143,11 @@ class _Salud extends StatelessWidget {
       children: [
         Container(width: 8, height: 8, color: salud.color),
         const SizedBox(width: Espacio.s),
-        Text(texto, style: Tipos.pequeno.copyWith(color: Paleta.tinta)),
+        Text(
+          texto,
+          style: Tipos.detalle(compacto: _compacto(context))
+              .copyWith(color: Paleta.tinta),
+        ),
       ],
     );
   }
@@ -172,12 +171,16 @@ class _BarraDato extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final compacto = _compacto(context);
     final fraccion = maximo <= 0 ? 0.0 : (valor / maximo).clamp(0.0, 1.0);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3),
       child: Row(
         children: [
-          SizedBox(width: 76, child: Text(etiqueta, style: Tipos.pequeno)),
+          SizedBox(
+            width: 84,
+            child: Text(etiqueta, style: Tipos.detalle(compacto: compacto)),
+          ),
           Expanded(
             child: Container(
               height: 8,
@@ -194,7 +197,7 @@ class _BarraDato extends StatelessWidget {
             child: Text(
               texto ?? '$valor',
               textAlign: TextAlign.right,
-              style: Tipos.dato.copyWith(fontSize: 14),
+              style: Tipos.dato.copyWith(fontSize: compacto ? 14 : 15),
             ),
           ),
         ],
@@ -202,3 +205,6 @@ class _BarraDato extends StatelessWidget {
     );
   }
 }
+
+/// En pantallas anchas los detalles van a 15 px para leerse en proyector.
+bool _compacto(BuildContext context) => MediaQuery.sizeOf(context).width < 900;

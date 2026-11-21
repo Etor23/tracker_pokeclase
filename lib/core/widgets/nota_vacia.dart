@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/tokens.dart';
+import 'trama.dart';
 
 /// Explica un dato vacío, pendiente o fallido. Borde de pixeles sueltos (la
 /// trama del mundo) y un cuadro rojo como marcador.
@@ -82,24 +83,7 @@ class BloqueCargando extends StatelessWidget {
     child: SizedBox(
       height: alto,
       width: ancho,
-      child: const CustomPaint(painter: _Trama()),
+      child: const CustomPaint(painter: TramaPainter()),
     ),
   );
-}
-
-class _Trama extends CustomPainter {
-  const _Trama();
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final pincel = Paint()..color = Paleta.linea;
-    for (var y = 0.0; y < size.height; y += 6) {
-      for (var x = (y ~/ 6).isEven ? 0.0 : 3.0; x < size.width; x += 6) {
-        canvas.drawRect(Rect.fromLTWH(x, y, 2, 2), pincel);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(_Trama oldDelegate) => false;
 }

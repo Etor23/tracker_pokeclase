@@ -72,7 +72,7 @@ class _Principal extends StatelessWidget {
             ? 192.0
             : ancho >= 560
             ? 144.0
-            : 80.0;
+            : 96.0;
         return switch (perfil.resumen) {
           Cargando() => BloqueCargando(alto: poster + 120),
           Fallo(:final error) => _reintentar(context, error),
@@ -181,7 +181,12 @@ class _Tira extends StatelessWidget {
         PokedexTira(total: total, registrada: p.registrada),
         if (p.fueraDeLaGeneracion case final fuera when fuera.isNotEmpty) ...[
           const SizedBox(height: Espacio.s),
-          Text(_textoFuera(fuera), style: Tipos.pequeno),
+          Text(
+            _textoFuera(fuera),
+            style: Tipos.detalle(
+              compacto: MediaQuery.sizeOf(context).width < 900,
+            ),
+          ),
         ],
       ],
     ),
@@ -212,13 +217,14 @@ class _FilaCifras extends StatelessWidget {
   Widget build(BuildContext context) {
     final b = r.batallas;
     final p = r.pokemon;
+    // Espacio no separable entre número y palabra: "1 debilitado" no se parte.
+    String cuenta(int n, String uno, String varios) =>
+        '$n ${n == 1 ? uno : varios}';
     final salud = [
-      if (p.sanos > 0) '${p.sanos} ${p.sanos == 1 ? 'sano' : 'sanos'}',
-      if (p.afectados > 0)
-        '${p.afectados} ${p.afectados == 1 ? 'afectado' : 'afectados'}',
-      if (p.debilitados > 0)
-        '${p.debilitados} ${p.debilitados == 1 ? 'debilitado' : 'debilitados'}',
-      if (p.enCrianza > 0) '${p.enCrianza} en crianza',
+      if (p.sanos > 0) cuenta(p.sanos, 'sano', 'sanos'),
+      if (p.afectados > 0) cuenta(p.afectados, 'afectado', 'afectados'),
+      if (p.debilitados > 0) cuenta(p.debilitados, 'debilitado', 'debilitados'),
+      if (p.enCrianza > 0) '${p.enCrianza} en crianza',
     ].join(' · ');
     final decididas = b.victorias + b.derrotas;
 
@@ -227,7 +233,7 @@ class _FilaCifras extends StatelessWidget {
       _Celda(
         'Batallas',
         '${b.total}',
-        '${b.victorias} V · ${b.derrotas} D · ${b.huidas} H',
+        '${b.victorias} V · ${b.derrotas} D · ${b.huidas} H',
       ),
       _Celda(
         'Win rate',
@@ -241,42 +247,36 @@ class _FilaCifras extends StatelessWidget {
 
     final valor = compacta ? 32.0 : 48.0;
     final columnas = compacta ? 2 : 4;
-    return Container(
-      decoration: const BoxDecoration(
-        border: Border(
-          top: BorderSide(color: Paleta.tinta, width: Espacio.regla),
-        ),
+    final filas = [
+      for (var i = 0; i < celdas.length; i += columnas)
+        celdas.sublist(i, i + columnas),
+    ];
+    // Table: todas las celdas de una fila miden lo mismo, así las reglas y
+    // divisores corren completos.
+    return Table(
+      border: TableBorder(
+        top: const BorderSide(color: Paleta.tinta, width: Espacio.regla),
+        verticalInside: const BorderSide(color: Paleta.linea),
+        horizontalInside: const BorderSide(color: Paleta.linea),
       ),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final anchoCelda = constraints.maxWidth / columnas;
-          return Wrap(
+      defaultVerticalAlignment: TableCellVerticalAlignment.top,
+      children: [
+        for (final fila in filas)
+          TableRow(
             children: [
-              for (final (i, c) in celdas.indexed)
-                Container(
-                  width: anchoCelda,
+              for (final (i, c) in fila.indexed)
+                Padding(
                   padding: EdgeInsets.fromLTRB(
-                    i % columnas == 0 ? 0 : Espacio.m,
+                    i == 0 ? 0 : Espacio.m,
                     Espacio.m,
                     Espacio.m,
                     Espacio.m,
                   ),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      left: i % columnas == 0
-                          ? BorderSide.none
-                          : const BorderSide(color: Paleta.linea),
-                      bottom: compacta && i < columnas
-                          ? const BorderSide(color: Paleta.linea)
-                          : BorderSide.none,
-                    ),
-                  ),
-                  child: c.build(valor),
+                  child: c.build(valor, compacto: compacta),
                 ),
             ],
-          );
-        },
-      ),
+          ),
+      ],
     );
   }
 }
@@ -288,7 +288,7 @@ class _Celda {
   final String valor;
   final String detalle;
 
-  Widget build(double tam) => Semantics(
+  Widget build(double tam, {required bool compacto}) => Semantics(
     label: '$etiqueta: $valor. $detalle',
     excludeSemantics: true,
     child: Column(
@@ -301,7 +301,7 @@ class _Celda {
         const SizedBox(height: Espacio.s + 4),
         Text(valor, style: Tipos.bitmap(tam)),
         const SizedBox(height: Espacio.s),
-        Text(detalle, style: Tipos.pequeno),
+        Text(detalle, style: Tipos.detalle(compacto: compacto)),
       ],
     ),
   );
