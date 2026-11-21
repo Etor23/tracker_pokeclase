@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:material_ui/material_ui.dart';
@@ -59,8 +60,9 @@ Future<void> capturar(
   required Map<String, String> datos,
   required String sesionId,
   required String nombre,
-  required String irA,
   required String archivo,
+  String? irA,
+  String? ruta,
   String? pestana,
 }) async {
   tester.view.physicalSize = tamano;
@@ -90,7 +92,10 @@ Future<void> capturar(
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text(irA).first);
+    if (irA != null) await tester.tap(find.text(irA).first);
+    if (ruta != null) {
+      GoRouter.of(tester.element(find.byType(Scaffold).first)).go(ruta);
+    }
     await tester.runAsync(
       () => Future.delayed(const Duration(milliseconds: 300)),
     );
@@ -162,7 +167,13 @@ class _Peticion implements HttpClientRequest {
 
   @override
   Future<HttpClientResponse> close() async {
-    final archivo = File('test/fixtures/sprites/${url.pathSegments.last}');
+    // Los sprites de espalda (`.../back/25.png`) se guardan como `back-25.png`.
+    final segmentos = url.pathSegments;
+    final espalda =
+        segmentos.length > 1 && segmentos[segmentos.length - 2] == 'back';
+    final archivo = File(
+      'test/fixtures/sprites/${espalda ? 'back-' : ''}${segmentos.last}',
+    );
     return _Respuesta(archivo.existsSync() ? archivo.readAsBytesSync() : null);
   }
 

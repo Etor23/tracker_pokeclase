@@ -84,9 +84,17 @@ Map<String, Object?> _poke(
     'tipoSecundario': t2,
     'urlFrontal':
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$especie.png',
+    'urlTrasera':
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/$especie.png',
   },
   'crianza': id == 4
-      ? {'hambre': 50, 'energia': 70, 'higiene': 40, 'vivo': true}
+      ? {
+          'hambre': 50,
+          'energia': 70,
+          'higiene': 40,
+          'vivo': true,
+          'fechaAdopcion': '2026-11-15T10:00:00',
+        }
       : null,
 };
 
