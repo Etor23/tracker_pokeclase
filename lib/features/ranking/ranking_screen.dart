@@ -11,6 +11,7 @@ import '../../core/router.dart';
 import '../../core/session/session_controller.dart';
 import '../../core/theme/tokens.dart';
 import '../../core/widgets/nota_vacia.dart';
+import '../../core/widgets/pie_paginado.dart';
 import '../../core/widgets/tracker_shell.dart';
 import '../../data/models/ranking.dart';
 import '../../data/tracker_repository.dart';
@@ -287,44 +288,16 @@ class _Resultados extends StatelessWidget {
                     atenuarPosicion: r.buscando,
                   ),
           const SizedBox(height: Espacio.l),
-          _Mas(r),
+          PiePaginado(
+            mostrados: r.filas.length,
+            total: r.total,
+            cargando: r.cargandoMas,
+            error: r.errorMas,
+            alCargarMas: r.cargarMas,
+          ),
         ],
       ),
     };
-  }
-}
-
-class _Mas extends StatelessWidget {
-  const _Mas(this.r);
-
-  final RankingController r;
-
-  @override
-  Widget build(BuildContext context) {
-    final mostrando = Text(
-      'Mostrando ${r.filas.length} de ${r.total}',
-      style: Tipos.pequeno,
-    );
-    if (r.errorMas != null) {
-      return NotaVacia(
-        mensajeParaUsuario(r.errorMas!),
-        accion: OutlinedButton(
-          onPressed: r.cargarMas,
-          child: const Text('REINTENTAR'),
-        ),
-      );
-    }
-    if (!r.hayMas) return mostrando;
-    return Row(
-      children: [
-        OutlinedButton(
-          onPressed: r.cargandoMas ? null : r.cargarMas,
-          child: Text(r.cargandoMas ? 'CARGANDO…' : 'CARGAR MÁS'),
-        ),
-        const SizedBox(width: Espacio.m),
-        mostrando,
-      ],
-    );
   }
 }
 

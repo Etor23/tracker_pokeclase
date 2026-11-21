@@ -24,8 +24,9 @@ const idAsh = 'a8b8da82-97ba-4459-b2ac-6ecb68fd4ac9';
 String fixture(String nombre) =>
     File('test/fixtures/$nombre.json').readAsStringSync();
 
-/// Backend falso que responde cada GET con el JSON de [datos]:
-/// `resumen`, `pokemon`, `pokedex` y `ranking`.
+/// Backend falso que responde cada GET con el JSON de [datos]: `resumen`,
+/// `pokemon`, `pokedex`, `ranking`, `batallas`, `mochila`, `mePokemon` y
+/// `catalogo`. Lo que falte responde 404.
 MockClientHandler backendDe(Map<String, String> datos) => (req) async {
   final p = req.url.path;
   final cuerpo = p.endsWith('/resumen')
@@ -36,6 +37,14 @@ MockClientHandler backendDe(Map<String, String> datos) => (req) async {
       ? datos['pokemon']
       : p.contains('/Pokedex/')
       ? datos['pokedex']
+      : p.startsWith('/api/Batallas/usuario/')
+      ? datos['batallas']
+      : p.startsWith('/api/Inventario/usuario/')
+      ? datos['mochila']
+      : p == '/api/me/pokemon'
+      ? datos['mePokemon']
+      : p == '/api/generation/1'
+      ? datos['catalogo']
       : null;
   return cuerpo == null
       ? http.Response('', 404)
@@ -52,6 +61,7 @@ Future<void> capturar(
   required String nombre,
   required String irA,
   required String archivo,
+  String? pestana,
 }) async {
   tester.view.physicalSize = tamano;
   tester.view.devicePixelRatio = 1;
@@ -85,6 +95,14 @@ Future<void> capturar(
       () => Future.delayed(const Duration(milliseconds: 300)),
     );
     await tester.pumpAndSettle();
+    if (pestana != null) {
+      await tester.tap(find.text(pestana).first);
+      await tester.pumpAndSettle();
+      await tester.runAsync(
+        () => Future.delayed(const Duration(milliseconds: 300)),
+      );
+      await tester.pumpAndSettle();
+    }
     for (final e in find.byType(Image).evaluate()) {
       await tester.runAsync(() => precacheImage((e.widget as Image).image, e));
     }

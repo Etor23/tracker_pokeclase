@@ -1,3 +1,4 @@
+import '../../core/formato.dart';
 import '../../core/theme/pokemon_colores.dart';
 import '../json.dart';
 
@@ -53,9 +54,7 @@ class PokemonJugador {
   bool get crianzaMuerta => crianza?.vivo == false;
 
   /// Sprite frontal; si el backend no lo manda, el de PokeAPI por especie.
-  String get sprite =>
-      estado.urlFrontal ??
-      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$idEspecie.png';
+  String get sprite => estado.urlFrontal ?? urlSpriteEspecie(idEspecie);
 }
 
 class EstadoPokemon {

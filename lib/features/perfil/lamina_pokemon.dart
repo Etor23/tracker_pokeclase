@@ -11,10 +11,18 @@ import '../../data/models/pokemon_jugador.dart';
 /// Lámina de un Pokémon: el único lugar donde entran los colores de tipo y de
 /// salud. Lleva al detalle del Pokémon.
 class LaminaPokemon extends StatelessWidget {
-  const LaminaPokemon({super.key, required this.userId, required this.pokemon});
+  const LaminaPokemon({
+    super.key,
+    required this.userId,
+    required this.pokemon,
+    this.reservado = false,
+  });
 
   final String userId;
   final PokemonJugador pokemon;
+
+  /// Reservado en un intercambio pendiente (solo se sabe en el perfil propio).
+  final bool reservado;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +36,8 @@ class LaminaPokemon extends StatelessWidget {
 
     return Semantics(
       button: true,
-      label: '$nombre, ver detalle',
+      label:
+          '$nombre${reservado ? ', reservado para un intercambio' : ''}, ver detalle',
       excludeSemantics: true,
       child: InkWell(
         onTap: () => context.go(Rutas.pokemon(userId, p.id)),
@@ -73,6 +82,15 @@ class LaminaPokemon extends StatelessWidget {
                             ),
                             const SizedBox(height: Espacio.s + 4),
                             _Salud(p.salud, estado: e.estadoNombre),
+                            if (reservado) ...[
+                              const SizedBox(height: Espacio.xs),
+                              Text(
+                                'Reservado para un intercambio',
+                                style: Tipos.detalle(
+                                  compacto: _compacto(context),
+                                ),
+                              ),
+                            ],
                             if (p.crianzaMuerta) ...[
                               const SizedBox(height: Espacio.xs),
                               const Text(
