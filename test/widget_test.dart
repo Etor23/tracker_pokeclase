@@ -33,7 +33,7 @@ void main() {
       app(SessionController(store: MemorySessionStore())),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Iniciar sesión'), findsOneWidget);
+    expect(find.text('ENTRAR'), findsOneWidget);
   });
 
   testWidgets('con sesión guardada entra directo al ranking', (tester) async {
@@ -42,7 +42,7 @@ void main() {
     );
     await tester.pumpWidget(app(SessionController(store: store)..restore()));
     await tester.pumpAndSettle();
-    expect(find.text('Pantalla pendiente: Ranking'), findsOneWidget);
+    expect(find.text('Pantalla pendiente: Ranking.'), findsOneWidget);
   });
 
   testWidgets('login correcto entra; cerrar sesión regresa al login', (
@@ -65,15 +65,15 @@ void main() {
 
     await tester.enterText(find.byType(TextFormField).at(0), 'ash');
     await tester.enterText(find.byType(TextFormField).at(1), 'Pikachu123!');
-    await tester.tap(find.text('Iniciar sesión'));
+    await tester.tap(find.text('ENTRAR'));
     await tester.pumpAndSettle();
 
     expect(session.session?.userId, userIdPrueba);
-    expect(find.text('Pantalla pendiente: Ranking'), findsOneWidget);
+    expect(find.text('Pantalla pendiente: Ranking.'), findsOneWidget);
 
-    await tester.tap(find.text('Cerrar sesión'));
+    await tester.tap(find.byTooltip('Cerrar sesión'));
     await tester.pumpAndSettle();
-    expect(find.text('Iniciar sesión'), findsOneWidget);
+    expect(find.text('ENTRAR'), findsOneWidget);
   });
 
   testWidgets('credenciales incorrectas muestran el error', (tester) async {
@@ -90,7 +90,7 @@ void main() {
 
     await tester.enterText(find.byType(TextFormField).at(0), 'ash');
     await tester.enterText(find.byType(TextFormField).at(1), 'mala');
-    await tester.tap(find.text('Iniciar sesión'));
+    await tester.tap(find.text('ENTRAR'));
     await tester.pumpAndSettle();
 
     expect(find.text('Usuario o contraseña incorrectos.'), findsOneWidget);

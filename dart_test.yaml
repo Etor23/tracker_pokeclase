@@ -1,0 +1,4 @@
+# Las capturas (test/capturas) solo corren con la variable CAPTURAS; ver el
+# comentario al inicio de test/capturas/perfil_capturas_test.dart.
+tags:
+  capturas:

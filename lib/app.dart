@@ -7,6 +7,7 @@ import 'core/router.dart';
 import 'core/session/session_controller.dart';
 import 'core/theme/app_theme.dart';
 import 'data/auth_repository.dart';
+import 'data/tracker_repository.dart';
 
 /// Raíz de la app. Recibe las dependencias ya armadas (ver `main.dart`) para
 /// que las pruebas puedan inyectar un `MockClient` y un `MemorySessionStore`.
@@ -35,6 +36,7 @@ class _TrackerAppState extends State<TrackerApp> {
       ChangeNotifierProvider.value(value: widget.session),
       Provider.value(value: widget.api),
       Provider(create: (_) => AuthRepository(widget.api, widget.session)),
+      Provider(create: (_) => TrackerRepository(widget.api)),
     ],
     child: MaterialApp.router(
       title: 'Tracker Pokémon',
