@@ -72,7 +72,7 @@ El `userId` es un string (GUID), no un número.
 
 | Endpoint | Devuelve | Uso |
 |---|---|---|
-| `POST /api/Auth/login` body `{ userName, password }` | `{ token, expiration }` | Token válido 24 h. Guardarlo en memoria; ante un 401 o al pasar `expiration`, volver a `/login`. |
+| `POST /api/Auth/login` body `{ userName, password }` | `{ token, expiration }` | Token válido 24 h. Guardarlo en `sessionStorage` (sobrevive a F5, se borra al cerrar la pestaña; nunca `localStorage`); ante un 401 o al pasar `expiration`, volver a `/login`. Credenciales incorrectas → 401 `{ message }`. |
 | `GET /api/tracker/usuarios` | Página `{ total, pagina, tamano, items[] }`; cada item `{ posicion, id, userName, victorias, derrotas, winRate, totalPokemon, especiesRegistradas }` | Ranking. Query opcionales: `orden` (`winrate`, `victorias`, `pokedex`, `pokemon`, `nombre`; por defecto `nombre`), `pagina`, `tamano` (1–100), `search`, `minBatallas` (por defecto 5). **Incluye** al usuario actual. Un `orden` inválido da 400. |
 | `GET /api/Users?search=` | `[{ id, userName }]` | Alternativa de búsqueda: mínimo 2 caracteres, máximo 50 resultados, **excluye** al usuario actual. Preferir `tracker/usuarios?search=`. |
 

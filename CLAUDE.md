@@ -11,13 +11,13 @@ y ejemplos de respuesta, está en `docs/endpoints.md`: consultarla por sección 
 
 @docs/CLAUDE.md
 
-## Estado actual (actualizar o borrar al empezar la implementación)
+## Estado actual (actualizar al avanzar)
 
-- `lib/main.dart` y `test/widget_test.dart` todavía son la plantilla del contador de
-  `flutter create`. Nada de la especificación está implementado.
-- Aún no se agregan dependencias (`go_router`, cliente HTTP, etc.) a `pubspec.yaml`.
-- Solo existe la plataforma **web** (`web/`); no hay `android/` ni `ios/`.
-- No es un repositorio git.
+- **Fase 0 (base) lista:** cliente HTTP, sesión, router con redirecciones y login funcional.
+- Ranking, perfil, detalle de Pokémon y `/yo` son marcadores (`EnConstruccion`).
+- Siguiente: Fase 1 (dirección visual → tokens de tema), luego las pantallas.
+- Solo existe la plataforma **web** (`web/`).
+- Repo: `origin` = GitHub `Etor23/tracker_pokeclase`, rama principal `master`.
 
 ## Comandos
 
@@ -28,16 +28,50 @@ flutter pub get                                   # instalar dependencias
 flutter run -d chrome --web-browser-flag "--disable-web-security"   # mientras el backend no tenga CORS
 flutter run -d chrome --dart-define=API_URL=https://backpokemon.runasp.net
 flutter analyze                                   # lints (flutter_lints, ver analysis_options.yaml)
+dart format lib test
 flutter test                                      # todas las pruebas
-flutter test test/widget_test.dart                # un archivo
-flutter test --plain-name "Counter increments smoke test"   # una prueba por nombre
+flutter test test/core/api_client_test.dart       # un archivo
+flutter test --plain-name "texto plano"           # una prueba por nombre
 flutter build web
 ```
 
+## Arquitectura
+
+```
+main.dart  → arma SessionController + ApiClient y los pasa a TrackerApp
+app.dart   → MultiProvider (sesión, ApiClient, repositorios) + MaterialApp.router
+core/      → config, api/ (cliente y errores), session/, router.dart, theme/
+data/      → json.dart (lectores tolerantes) y repositorios por dominio
+features/  → una carpeta por pantalla
+```
+
+- **Estado: `provider`.** Los repositorios se registran en `app.dart` con `Provider` y se
+  leen con `context.read<...>()`; el estado de cada pantalla va en un `ChangeNotifier`.
+- **`ApiClient` solo expone `get()` y `login()`.** Así se impone la regla de solo lectura:
+  no agregar métodos de escritura. Lanza excepciones selladas (`ApiException`); en la UI se
+  muestran con `mensajeParaUsuario(error)`, nunca el texto del backend.
+- **Sesión:** `SessionController` (ChangeNotifier) guarda la sesión en `sessionStorage`
+  mediante `SessionStore` (importación condicional: web real vs. memoria en las pruebas).
+  La expiración se revisa al leer `session`, sin temporizadores. Un 401 en una ruta con
+  token llama a `expire()`.
+- **Navegación:** el router escucha la sesión (`refreshListenable`), y
+  `redirigirSegunSesion` manda a `/login?from=...` y de regreso. Al hacer login no se navega
+  a mano. Las rutas se arman con `Rutas.usuario(id)` / `Rutas.pokemon(id, n)`.
+- **Modelos:** los `fromJson` usan los lectores de `data/json.dart` (`json.integer('x')`,
+  `json.utcDateOrNull('fecha')`, `json.objectList('items')`…), que nunca lanzan.
+- **Pruebas:** `TrackerApp` recibe sus dependencias, así que las pruebas de widgets usan
+  `MockClient` (`package:http/testing.dart`) y `MemorySessionStore`. `test/helpers.dart`
+  tiene `fakeJwt` / `tokenPrueba`.
+
 ## Notas de Dart/Flutter
 
-- El código usa *dot shorthands* (`.fromSeed(...)`, `mainAxisAlignment: .center`), válidos
-  desde Dart 3.10. No "corregirlos".
+- **Importar `package:material_ui/material_ui.dart`, no `package:flutter/material.dart`.**
+  En Flutter 3.47 Material vive en el paquete `material_ui`, y `go_router` reconoce la app
+  por el `MaterialApp` de ese paquete; mezclar ambos rompe las páginas de Material.
+- El código usa *dot shorthands* (`.all(16)`, `mainAxisAlignment: .center`), válidos desde
+  Dart 3.10, y parámetros nombrados privados (`required this._store`). No "corregirlos".
+- `http.Response('texto')` en las pruebas codifica en Latin-1; usar
+  `http.Response.bytes(utf8.encode(...), status)` para texto con acentos.
 
 ## Diseño de interfaz
 
@@ -49,8 +83,8 @@ revisores en `.claude/agents/`) y `better-ui` para el pulido de superficies e í
   demasiado redondeadas, *hero* genérico y cuadrículas de tarjetas repetidas.
 - Dar carácter con tipografía, espacio en blanco, composición y jerarquía.
 - Paleta sobria y con propósito. Colores, tipografía y espaciado viven como tokens en un solo
-  lugar (`ThemeData` + un `ThemeExtension` propio); los widgets no usan colores ni medidas
-  sueltos.
+  lugar (`core/theme/`: `ThemeData` + un `ThemeExtension` propio); los widgets no usan
+  colores ni medidas sueltos.
 - Interacciones cuidadas en vez de animaciones innecesarias.
 - Usar las referencias de diseño que se den, sin copiarlas a ciegas.
 - Revisar el resultado renderizado en escritorio y móvil: `flutter run -d chrome` y cambiar el
