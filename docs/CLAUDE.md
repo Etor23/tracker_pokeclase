@@ -128,6 +128,10 @@ Esto manda sobre las tablas de arriba cuando no coinciden.
 - **Ranking:** `minBatallas` debe ser ≥ 1, y `pagina` o `tamano` fuera de rango dan 400 con
   texto plano. `minBatallas` **no saca jugadores de la lista**: con el valor por defecto
   aparecen todos (7 jugadores, todos con 0 victorias y 0 derrotas y `winRate: null`).
+  `search` no distingue mayúsculas y busca subcadenas (`a` encuentra a todos). **Con
+  `search`, `posicion` se renumera dentro de los resultados**: deja de ser el lugar en el
+  ranking general, y la UI lo atenúa y lo explica. Los empates no comparten lugar. El tracker
+  ordena por `pokedex` por defecto; el valor por defecto del backend es `nombre`.
 - **`GET /api/Batallas/usuario/{id}/resumen` responde 500 con cuerpo vacío para todos los
   jugadores**, incluso para uno con batallas. Bug del backend: el encabezado de Batallas usa
   `batallas` de `tracker/usuarios/{id}/resumen` (victorias, derrotas, huidas, winRate) y

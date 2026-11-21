@@ -86,6 +86,15 @@ abstract final class Tipos {
     color: Paleta.blanco,
   );
 
+  /// Opción de un selector (chips de orden).
+  static const chipOrden = TextStyle(
+    fontFamily: 'Archivo',
+    fontSize: 14,
+    height: 1.2,
+    fontWeight: FontWeight.w600,
+    color: Paleta.tinta,
+  );
+
   /// Detalle que acompaña a una cifra: 15 px en pantallas anchas (se lee en
   /// proyector) y 13 px en celular.
   static TextStyle detalle({required bool compacto}) =>

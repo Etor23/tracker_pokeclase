@@ -16,8 +16,10 @@ y ejemplos de respuesta, está en `docs/endpoints.md`: consultarla por sección 
 - **Fase 0 (base) lista:** cliente HTTP, sesión, router con redirecciones y login funcional.
 - **Fase 1 (mundo visual) en cierre:** tokens, tema, marco de la app, login y perfil →
   pestaña Resumen con datos reales.
-- Pendientes (marcadores `EnConstruccion`/`NotaVacia`): ranking, detalle de Pokémon y las
-  pestañas Equipo, Batallas, Mochila, Pokédex, Tamagotchi e Intercambios.
+- **Fase 2 (pantallas) en curso**, en la rama `fase-2-pantallas`: ranking listo, con búsqueda,
+  orden y página en la URL (`/?orden=winrate&q=ash`) y carga por páginas.
+- Pendientes (marcadores `EnConstruccion`/`NotaVacia`): detalle de Pokémon y las pestañas
+  Equipo, Batallas, Mochila, Pokédex, Tamagotchi e Intercambios.
 - Solo existe la plataforma **web** (`web/`).
 - Repo: `origin` = GitHub `Etor23/tracker_pokeclase`, rama principal `master`.
 

@@ -8,27 +8,12 @@
 library;
 
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/testing.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:tracker/app.dart';
-import 'package:tracker/core/api/api_client.dart';
-import 'package:tracker/core/session/session.dart';
-import 'package:tracker/core/session/session_controller.dart';
-import 'package:tracker/core/session/session_store.dart';
 
 import '../helpers.dart';
 import 'soporte.dart';
-
-final _activas = Platform.environment.containsKey('CAPTURAS');
-
-const _idAsh = 'a8b8da82-97ba-4459-b2ac-6ecb68fd4ac9';
-
-String _fixture(String nombre) =>
-    File('test/fixtures/$nombre.json').readAsStringSync();
 
 /// Perfil SINTÉTICO, solo para juzgar el diseño con más datos. No es de
 /// ningún jugador real.
@@ -103,98 +88,43 @@ Map<String, Object?> _poke(
       : null,
 };
 
-MockClientHandler _backend(Map<String, String> datos) => (req) async {
-  final p = req.url.path;
-  final cuerpo = p.endsWith('/resumen')
-      ? datos['resumen']
-      : p.contains('/PokemonUsers/')
-      ? datos['pokemon']
-      : p.contains('/Pokedex/')
-      ? datos['pokedex']
-      : null;
-  return cuerpo == null
-      ? http.Response('', 404)
-      : http.Response.bytes(utf8.encode(cuerpo), 200);
-};
-
-Future<void> _capturar(
-  WidgetTester tester, {
-  required Size tamano,
-  required Map<String, String> datos,
-  required String sesionId,
-  required String archivo,
-}) async {
-  tester.view.physicalSize = tamano;
-  tester.view.devicePixelRatio = 1;
-  addTearDown(tester.view.reset);
-
-  final token = fakeJwt({
-    'sub': sesionId,
-    'unique_name': sesionId == _idAsh ? 'ash' : 'demo',
-    'exp':
-        DateTime.now().add(const Duration(days: 1)).millisecondsSinceEpoch ~/
-        1000,
-  });
-  final session = SessionController(store: MemorySessionStore())
-    ..start(Session.fromToken(token)!);
-
-  await HttpOverrides.runZoned(() async {
-    await tester.pumpWidget(
-      TrackerApp(
-        session: session,
-        api: ApiClient(
-          baseUrl: 'https://api.test',
-          httpClient: MockClient(_backend(datos)),
-          tokenProvider: () => session.token,
-          onUnauthorized: session.expire,
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-    // Ir a /yo y esperar datos, imágenes y el barrido de la Pokédex.
-    await tester.tap(find.text('Mi perfil').first);
-    await tester.runAsync(
-      () => Future.delayed(const Duration(milliseconds: 300)),
-    );
-    await tester.pumpAndSettle();
-    for (final e in find.byType(Image).evaluate()) {
-      await tester.runAsync(() => precacheImage((e.widget as Image).image, e));
-    }
-    await tester.pumpAndSettle();
-  }, createHttpClient: SpritesLocales().createHttpClient);
-
-  await expectLater(find.byType(TrackerApp), matchesGoldenFile(archivo));
-}
-
 void main() {
   setUpAll(cargarFuentes);
 
   final reales = {
-    'resumen': _fixture('ash_resumen'),
-    'pokemon': _fixture('ash_pokemon'),
-    'pokedex': _fixture('ash_pokedex'),
+    'resumen': fixture('ash_resumen'),
+    'pokemon': fixture('ash_pokemon'),
+    'pokedex': fixture('ash_pokedex'),
   };
 
   for (final (nombre, tamano) in [
     ('escritorio', const Size(1440, 900)),
     ('celular', const Size(390, 844)),
   ]) {
-    testWidgets('perfil de ash ($nombre)', skip: !_activas, (tester) async {
-      await _capturar(
+    testWidgets('perfil de ash ($nombre)', skip: !capturasActivas, (
+      tester,
+    ) async {
+      await capturar(
         tester,
         tamano: tamano,
         datos: reales,
-        sesionId: _idAsh,
+        sesionId: idAsh,
+        nombre: 'ash',
+        irA: 'Mi perfil',
         archivo: 'goldens/perfil_ash_$nombre.png',
       );
     });
 
-    testWidgets('perfil sintético ($nombre)', skip: !_activas, (tester) async {
-      await _capturar(
+    testWidgets('perfil sintético ($nombre)', skip: !capturasActivas, (
+      tester,
+    ) async {
+      await capturar(
         tester,
         tamano: tamano,
         datos: _demo,
         sesionId: userIdPrueba,
+        nombre: 'demo',
+        irA: 'Mi perfil',
         archivo: 'goldens/perfil_demo_$nombre.png',
       );
     });
