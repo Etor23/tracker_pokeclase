@@ -117,6 +117,41 @@ usar `GET /api/Inventario/usuario/{miId}`.
 - El CRUD antiguo `/api/Intercambios`.
 - Cualquier ruta de escritura o de GameAdmin.
 
+### Verificado contra el servidor real (2026-11-21, cuenta de prueba `ash`)
+
+Esto manda sobre las tablas de arriba cuando no coinciden.
+
+- **Login:** el JWT trae el id en el claim largo `.../claims/nameidentifier` y el nombre en
+  `.../claims/name`. `expiration` viene con `Z`.
+- **Ranking:** `minBatallas` debe ser ≥ 1, y `pagina` o `tamano` fuera de rango dan 400 con
+  texto plano. `minBatallas` **no saca jugadores de la lista**: con el valor por defecto
+  aparecen todos (7 jugadores, todos con 0 victorias y 0 derrotas y `winRate: null`).
+- **`GET /api/Batallas/usuario/{id}/resumen` responde 500 con cuerpo vacío para todos los
+  jugadores**, incluso para uno con batallas. Bug del backend: el encabezado de Batallas usa
+  `batallas` de `tracker/usuarios/{id}/resumen` (victorias, derrotas, huidas, winRate) y
+  trata `rachaActual`, `mejorPokemon` y `rivalMasEnfrentado` como opcionales.
+- **Resumen:** 404 en formato ProblemDetails (`title: "Not Found"`).
+- **Pokémon del jugador:** coincide con la guía y trae campos extra (`idUsuario`,
+  `pokemonEstado.idPokemonUser`, `pokemonEstado.idPokeball`). `fechaObtencion` llega
+  **sin `Z`**. `nombre` llega con mayúsculas inconsistentes (`marill`, `Pikachu`):
+  capitalizar al mostrar.
+- **Especies fuera de la Gen 1:** `ash` tiene un Marill (#183), y la Pokédex lo cuenta en
+  `registrados` aunque `total` sea 151. La cuadrícula muestra 1..`total`; las especies con id
+  mayor a `total` van aparte (por ejemplo, "Otras especies"), sin romper el conteo.
+- **Batallas:** `pokemon` es el Pokémon **del jugador**; el rival solo viene como
+  `idPokemonRival`. `fecha` llega sin `Z`.
+- **Mochila:** cada elemento es `{ id, idItem, idUser, cantidad, item: { id, nombre,
+  urlImagen, descripcion, tipoJuego, multiplicadorCaptura, … } }`, con los datos del objeto
+  anidados en `item`. `nombre` viene en inglés con guiones (`poke-ball`): mostrarlo como
+  "Poke Ball". La descripción está en inglés.
+- **`GET /api/me/pokemon`** tiene **otra forma** que `PokemonUsers`: es plano (`vidaActual`,
+  `vidaTotal`), `estado` es **texto** (`"Sano"`), no número, y no trae `pokemonEstado` ni
+  sprites. Usarlo solo para `available`/`reserved`, cruzando por `id`.
+- **`GET /api/tamagotchi` devuelve un arreglo** (vacío para `ash`), no un objeto. Su forma
+  interna sigue sin verificarse.
+- **`GET /api/me/trades`:** `[]` para `ash`; su forma interna sigue sin verificarse.
+- **Mensajes de error:** los 400 llegan en texto plano en español; los 404, en ProblemDetails.
+
 ## Reglas de presentación
 
 - **Sprites por id:** `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{idPokemon}.png`.
@@ -139,11 +174,14 @@ usar `GET /api/Inventario/usuario/{miId}`.
   validación y otros vienen vacíos. Leer el cuerpo como texto y parsear solo si se puede.
 - Modelos tolerantes: campos nuevos o faltantes no deben tronar la app
   (`fromJson` con valores por defecto y nullables).
-- Las formas de respuesta de las rutas con token **no se han verificado contra el servidor
-  real**; si algo no coincide con esta guía, ajustar el modelo y anotar la diferencia aquí.
-  Verificado (2026-11-21): login desde Flutter web; el JWT trae el id y el nombre del usuario.
+- Las formas de respuesta ya se verificaron contra el servidor real (ver "Verificado contra
+  el servidor real"), salvo Tamagotchi e Intercambios. Si algo más no coincide, ajustar el
+  modelo y anotar la diferencia en esa sección.
 
 ## Pendientes del equipo de backend
 
 - Configurar CORS con `AllowAnyOrigin()` (ver arriba).
-- Confirmar que `GET /api/Inventario/usuario/{userId}` no acredita pokébolas.
+- Confirmar que `GET /api/Inventario/usuario/{userId}` no acredita pokébolas. Prueba del
+  2026-11-21: con una llamada, el total de objetos de `ash` siguió en 14 (sin cambio).
+- Corregir el 500 de `GET /api/Batallas/usuario/{userId}/resumen` (falla con todos los
+  jugadores).
