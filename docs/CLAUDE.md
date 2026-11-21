@@ -62,6 +62,8 @@ Usar `go_router` para que cada perfil tenga una URL que se pueda compartir.
 | `/yo` | Mi perfil: igual que el perfil + pestañas Tamagotchi e Intercambios |
 
 Si no hay token o el token expiró, redirigir a `/login` y volver después a la ruta pedida.
+Sin ruta pedida (abrir la app o hacer login directo), se entra a `/yo`: el progreso
+personal es lo primero (decisión del 2026-11-21).
 
 ## Endpoints que usa el tracker
 

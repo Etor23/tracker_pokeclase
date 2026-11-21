@@ -13,16 +13,19 @@ void main() {
     expect(redirigir('/login', autenticado: false), isNull);
   });
 
-  test('con sesión en login vuelve a la ruta pedida', () {
-    expect(redirigir('/login?from=%2Fyo', autenticado: true), '/yo');
-    expect(redirigir('/login', autenticado: true), '/');
+  test('con sesión en login vuelve a la ruta pedida o a Mi perfil', () {
+    expect(
+      redirigir('/login?from=%2Fusuario%2Fabc', autenticado: true),
+      '/usuario/abc',
+    );
+    expect(redirigir('/login', autenticado: true), '/yo');
     expect(redirigir('/yo', autenticado: true), isNull);
   });
 
   test('no acepta redirecciones externas', () {
-    expect(rutaInternaSegura('https://malo.com'), '/');
-    expect(rutaInternaSegura('//malo.com'), '/');
-    expect(rutaInternaSegura('/login?from=/x'), '/');
+    expect(rutaInternaSegura('https://malo.com'), '/yo');
+    expect(rutaInternaSegura('//malo.com'), '/yo');
+    expect(rutaInternaSegura('/login?from=/x'), '/yo');
     expect(rutaInternaSegura('/usuario/abc'), '/usuario/abc');
   });
 

@@ -48,8 +48,8 @@ Cada perfil tiene una URL que se puede compartir.
 - Los sprites vienen del repositorio público de PokeAPI (`urlFrontal` o por id de especie).
 - Todavía hay pocos datos reales (7 jugadores, casi sin batallas), así que los estados vacíos
   son lo más frecuente hoy.
-- Decisión abierta: si después del login se entra al ranking (`/`, como dice la especificación
-  actual) o a "Mi perfil", porque el progreso personal es la prioridad.
+- Después del login, o al abrir la app sin ruta, se entra a "Mi perfil" (`/yo`); un link
+  compartido lleva a su ruta (decidido el 2026-11-21).
 
 ## Brand Commitments
 

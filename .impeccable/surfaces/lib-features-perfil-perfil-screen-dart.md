@@ -45,7 +45,7 @@ suavizados, y las cifras grandes comparten ese grano.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
-## Unresolved
+## Resolved
 
-- Destino después del login: ranking (`/`, según la especificación) o Mi perfil (`/yo`), dado
-  que el progreso personal es la prioridad.
+- Destino después del login: Mi perfil (`/yo`), salvo que se haya pedido otra ruta
+  (2026-11-21).

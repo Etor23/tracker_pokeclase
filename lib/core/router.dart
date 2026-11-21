@@ -21,7 +21,8 @@ abstract final class Rutas {
 }
 
 GoRouter createRouter(SessionController session) => GoRouter(
-  initialLocation: Rutas.ranking,
+  // Abrir la app sin ruta entra a Mi perfil; un link compartido manda.
+  initialLocation: Rutas.yo,
   refreshListenable: session,
   redirect: (context, state) => redirigirSegunSesion(
     autenticado: session.isAuthenticated,
@@ -60,7 +61,8 @@ GoRouter createRouter(SessionController session) => GoRouter(
 );
 
 /// Sin sesión → `/login?from=<ruta pedida>`. Con sesión en `/login` → vuelve
-/// a `from` (solo rutas internas) o al ranking.
+/// a `from` (solo rutas internas) o a Mi perfil, porque el progreso personal
+/// es lo primero (PRODUCT.md).
 String? redirigirSegunSesion({
   required bool autenticado,
   required Uri location,
@@ -84,7 +86,7 @@ String rutaInternaSegura(String? from) {
       !from.startsWith('/') ||
       from.startsWith('//') ||
       from.startsWith(Rutas.login)) {
-    return Rutas.ranking;
+    return Rutas.yo;
   }
   return from;
 }
