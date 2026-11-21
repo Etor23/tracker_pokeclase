@@ -26,8 +26,8 @@ String fixture(String nombre) =>
     File('test/fixtures/$nombre.json').readAsStringSync();
 
 /// Backend falso que responde cada GET con el JSON de [datos]: `resumen`,
-/// `pokemon`, `pokedex`, `ranking`, `batallas`, `mochila`, `mePokemon` y
-/// `catalogo`. Lo que falte responde 404.
+/// `pokemon`, `pokedex`, `ranking`, `batallas`, `mochila`, `mePokemon`,
+/// `catalogo`, `mascotas` e `intercambios`. Lo que falte responde 404.
 MockClientHandler backendDe(Map<String, String> datos) => (req) async {
   final p = req.url.path;
   final cuerpo = p.endsWith('/resumen')
@@ -46,6 +46,10 @@ MockClientHandler backendDe(Map<String, String> datos) => (req) async {
       ? datos['mePokemon']
       : p == '/api/generation/1'
       ? datos['catalogo']
+      : p == '/api/tamagotchi'
+      ? datos['mascotas']
+      : p == '/api/me/trades'
+      ? datos['intercambios']
       : null;
   return cuerpo == null
       ? http.Response('', 404)
@@ -101,7 +105,26 @@ Future<void> capturar(
     );
     await tester.pumpAndSettle();
     if (pestana != null) {
+      // En celular la barra de pestañas se desplaza: primero hacerla visible.
+      await tester.ensureVisible(find.text(pestana).first);
+      await tester.pumpAndSettle();
       await tester.tap(find.text(pestana).first);
+      await tester.pumpAndSettle();
+      // ensureVisible también movió la página: regresarla arriba para que la
+      // captura empiece en el encabezado.
+      // (El primer Scrollable puede ser el campo de búsqueda: se busca el
+      // vertical.)
+      tester
+          .state<ScrollableState>(
+            find
+                .byWidgetPredicate(
+                  (w) =>
+                      w is Scrollable && w.axisDirection == AxisDirection.down,
+                )
+                .first,
+          )
+          .position
+          .jumpTo(0);
       await tester.pumpAndSettle();
       await tester.runAsync(
         () => Future.delayed(const Duration(milliseconds: 300)),

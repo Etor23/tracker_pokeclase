@@ -23,9 +23,10 @@ y ejemplos de respuesta, está en `docs/endpoints.md`: consultarla por sección 
   - Cada pestaña es un sliver. Lo que no usa Resumen se pide al abrir su pestaña con los
     métodos `asegurar…` de `PerfilController`, que se pueden llamar desde `build`.
   - El catálogo de especies (`/api/generation/1`) queda en caché en `TrackerRepository`.
-- Pendientes (marcadores): Tamagotchi e Intercambios. Se construyen con los campos que
-  documenta `docs/endpoints.md`, pero sus respuestas reales todavía no se han verificado
-  (`ash` no tiene mascotas ni intercambios).
+- **Tamagotchi e Intercambios** (solo en `/yo`) están construidos con los campos de
+  `docs/endpoints.md`, pero **sin verificar** contra el servidor: `ash` no tiene mascotas ni
+  intercambios. Los modelos (`mascota.dart`, `intercambio.dart`) son tolerantes y lo dicen en
+  su comentario. Cuando haya datos reales, comparar y ajustar.
 - Solo existe la plataforma **web** (`web/`).
 - Repo: `origin` = GitHub `Etor23/tracker_pokeclase`, rama principal `master`.
 

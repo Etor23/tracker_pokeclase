@@ -21,6 +21,9 @@ void main() {
     'mePokemon': fixture('ash_me_pokemon'),
     'catalogo': fixture('generation_1'),
     'batallas': '{"total":0,"pagina":1,"tamano":20,"items":[]}',
+    // Respuestas reales de ash: listas vacías.
+    'mascotas': '[]',
+    'intercambios': '[]',
   };
 
   final casos = [
@@ -30,6 +33,9 @@ void main() {
     ('mochila_ash', 'Mochila', ash, idAsh, 'ash'),
     ('pokedex_demo', 'Pokédex', datosDemo, userIdPrueba, 'demo'),
     ('pokedex_ash', 'Pokédex', ash, idAsh, 'ash'),
+    ('tamagotchi_demo', 'Tamagotchi', datosDemo, userIdPrueba, 'demo'),
+    ('intercambios_demo', 'Intercambios', datosDemo, userIdPrueba, 'demo'),
+    ('intercambios_ash', 'Intercambios', ash, idAsh, 'ash'),
   ];
 
   for (final (nombre, tamano) in [

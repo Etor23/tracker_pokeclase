@@ -2,6 +2,8 @@ import '../core/api/api_client.dart';
 import 'json.dart';
 import 'models/batalla.dart';
 import 'models/catalogo_especies.dart';
+import 'models/intercambio.dart';
+import 'models/mascota.dart';
 import 'models/objeto_mochila.dart';
 import 'models/pokedex_jugador.dart';
 import 'models/pokemon_jugador.dart';
@@ -82,6 +84,18 @@ class TrackerRepository {
     for (final p in asJsonList(await _api.get('/api/me/pokemon')))
       if (p.boolean('reserved')) p.integer('id'),
   };
+
+  /// Mis mascotas (`GET /api/tamagotchi`). Solo existe para el usuario actual.
+  Future<List<Mascota>> mascotas() async =>
+      asJsonList(await _api.get('/api/tamagotchi'))
+          .map(Mascota.fromJson)
+          .toList();
+
+  /// Mis intercambios (`GET /api/me/trades`), con filtro opcional por estado.
+  Future<List<Intercambio>> intercambios({EstadoIntercambio? estado}) async =>
+      asJsonList(
+        await _api.get('/api/me/trades', query: {'status': estado?.valor}),
+      ).map(Intercambio.fromJson).toList();
 
   Future<CatalogoEspecies>? _catalogo;
 

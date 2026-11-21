@@ -25,17 +25,20 @@ class ChipTipo extends StatelessWidget {
 
 /// Cuadro del color de salud más el estado escrito.
 class MarcaSalud extends StatelessWidget {
-  const MarcaSalud(this.salud, {super.key, required this.estado});
+  const MarcaSalud(this.salud, {super.key, required this.estado, this.texto});
 
   final Salud salud;
   final String? estado;
 
+  /// Reemplaza el texto (por ejemplo "Murió" en una mascota).
+  final String? texto;
+
   @override
   Widget build(BuildContext context) {
     // "Afectado" sin más no dice qué tiene: se muestra el estado real.
-    final texto = salud == Salud.afectado && estado != null
-        ? estado!
-        : salud.etiqueta;
+    final texto =
+        this.texto ??
+        (salud == Salud.afectado && estado != null ? estado! : salud.etiqueta);
     return Row(
       mainAxisSize: .min,
       children: [

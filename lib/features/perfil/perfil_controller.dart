@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import '../../core/carga.dart';
 import '../../data/models/batalla.dart';
 import '../../data/models/catalogo_especies.dart';
+import '../../data/models/intercambio.dart';
+import '../../data/models/mascota.dart';
 import '../../data/models/objeto_mochila.dart';
 import '../../data/models/pokedex_jugador.dart';
 import '../../data/models/pokemon_jugador.dart';
@@ -33,6 +35,12 @@ class PerfilController extends ChangeNotifier {
   /// Ids de mis Pokémon reservados en un intercambio (solo en el propio).
   Carga<Set<int>>? reservados;
 
+  /// Solo en el perfil propio: el backend solo da las del usuario actual.
+  Carga<List<Mascota>>? mascotas;
+  Carga<List<Intercambio>>? intercambios;
+  EstadoIntercambio? filtroIntercambios;
+  int _genIntercambios = 0;
+
   late final ListaBatallas batallas = ListaBatallas(_repo, userId);
 
   bool _disposed = false;
@@ -45,6 +53,8 @@ class PerfilController extends ChangeNotifier {
     pokedex = const Cargando();
     mochila = null;
     reservados = null;
+    mascotas = null;
+    intercambios = null;
     batallas.reiniciar();
     _avisar();
     await Future.wait([
@@ -70,6 +80,43 @@ class PerfilController extends ChangeNotifier {
     if (!propio || reservados != null) return;
     reservados = const Cargando();
     _leer(_repo.misReservados(), (c) => reservados = c);
+  }
+
+  void asegurarMascotas() {
+    if (!propio || mascotas != null) return;
+    mascotas = const Cargando();
+    _leer(_repo.mascotas(), (c) => mascotas = c);
+  }
+
+  void reintentarMascotas() {
+    mascotas = null;
+    asegurarMascotas();
+    _avisar();
+  }
+
+  void asegurarIntercambios() {
+    if (!propio || intercambios != null) return;
+    _cargarIntercambios();
+  }
+
+  void filtrarIntercambios(EstadoIntercambio? estado) {
+    filtroIntercambios = estado;
+    _cargarIntercambios();
+    _avisar();
+  }
+
+  void reintentarIntercambios() {
+    _cargarIntercambios();
+    _avisar();
+  }
+
+  void _cargarIntercambios() {
+    final gen = ++_genIntercambios;
+    intercambios = const Cargando();
+    _leer(_repo.intercambios(estado: filtroIntercambios), (c) {
+      // Un filtro nuevo invalida la respuesta del anterior.
+      if (gen == _genIntercambios) intercambios = c;
+    });
   }
 
   void reintentarMochila() {

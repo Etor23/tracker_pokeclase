@@ -12,9 +12,11 @@ import '../../data/tracker_repository.dart';
 import 'perfil_controller.dart';
 import 'batallas_tab.dart';
 import 'equipo_tab.dart';
+import 'intercambios_tab.dart';
 import 'mochila_tab.dart';
 import 'pokedex_tab.dart';
 import 'resumen_tab.dart';
+import 'tamagotchi_tab.dart';
 
 /// Perfil de un jugador (`/usuario/:id`) o el propio (`/yo`, con las pestañas
 /// extra de Tamagotchi e Intercambios).
@@ -123,6 +125,8 @@ class _Perfil extends StatelessWidget {
                     2 => const SliverToBoxAdapter(child: BatallasTab()),
                     3 => const SliverToBoxAdapter(child: MochilaTab()),
                     4 => const PokedexTab(),
+                    5 => const SliverToBoxAdapter(child: TamagotchiTab()),
+                    6 => const SliverToBoxAdapter(child: IntercambiosTab()),
                     _ => SliverToBoxAdapter(
                       child: NotaVacia(
                         'La pestaña ${pestanas[tabs.index]} está en construcción.',
