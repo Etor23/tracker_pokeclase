@@ -141,6 +141,7 @@ usar `GET /api/Inventario/usuario/{miId}`.
   (`fromJson` con valores por defecto y nullables).
 - Las formas de respuesta de las rutas con token **no se han verificado contra el servidor
   real**; si algo no coincide con esta guía, ajustar el modelo y anotar la diferencia aquí.
+  Verificado (2026-11-21): login desde Flutter web; el JWT trae el id y el nombre del usuario.
 
 ## Pendientes del equipo de backend
 
